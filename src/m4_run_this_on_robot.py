@@ -22,25 +22,34 @@ def main():
     time.sleep(2)
     run_test_move_arm_to_position()
 
+
 def run_test_calibrate_arm():
     robot = rosebot.RoseBot()
     robot.arm_and_claw.calibrate_arm()
+    print("Calibration successful!")
 
 def run_test_arm():
     robot = rosebot.RoseBot()
     robot.arm_and_claw.raise_arm()
+    print("Raise arm successful!")
     time.sleep(2)
     robot.arm_and_claw.lower_arm()
+    print("Lower arm successful!")
 
 def run_test_move_arm_to_position():
     robot = rosebot.RoseBot()
     robot.arm_and_claw.move_arm_to_position(360*10)
+    print("Position 1 finished")
     time.sleep(.5)
     robot.arm_and_claw.move_arm_to_position(360*4)
+    print("Position 2 finished")
     time.sleep(.5)
     robot.arm_and_claw.move_arm_to_position(360*7)
+    print("Position 3 finished")
     time.sleep(.5)
     robot.arm_and_claw.lower_arm()
+    print("Testing finished")
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
