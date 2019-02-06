@@ -10,7 +10,7 @@
     -- Lower-level code to interact with the EV3 robot library.
 
   Author:  Your professors (for the framework and lower-level code)
-    and PUT_YOUR_NAMES_HERE.
+    and Kent Smith, Eddie Mannan, Cleo Barmes, and Ethan Mahn.
   Winter term, 2018-2019.
 """
 
