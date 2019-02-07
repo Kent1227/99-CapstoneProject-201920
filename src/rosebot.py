@@ -97,6 +97,13 @@ class DriveSystem(object):
         at the given speed for the given number of inches,
         using the encoder (degrees traveled sensor) built into the motors.
         """
+        inches_per_degree = (1.3*math.pi)/360
+        degrees = inches/inches_per_degree
+        self.left_motor.reset_position()
+        self.go(speed,speed)
+        while math.fabs(self.left_motor.get_position())<degrees:
+            pass
+        self.stop()
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
@@ -107,6 +114,11 @@ class DriveSystem(object):
         Goes straight at the given speed until the intensity returned
         by the color_sensor is less than the given intensity.
         """
+        c = ColorSensor(3)
+        self.go(speed, speed)
+        while c.get_reflected_light_intensity() >= intensity:
+            pass
+        self.stop()
 
     def go_straight_until_intensity_is_greater_than(self, intensity, speed):
         """
