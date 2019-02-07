@@ -153,6 +153,7 @@ def get_control_frame(window, mqtt_sender):
 ###############################################################################
 ###############################################################################
 
+
 ###############################################################################
 # Handlers for Buttons in the Teleoperation frame.
 ###############################################################################
@@ -174,6 +175,7 @@ def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
       :type  right_entry_box:  ttk.Entry
       :type  mqtt_sender:      com.MqttClient
     """
+
 
 def handle_left(left_entry_box, right_entry_box, mqtt_sender):
     """
