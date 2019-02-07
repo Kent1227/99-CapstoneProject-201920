@@ -25,9 +25,10 @@ def real_thing():
     dtr = shared_gui_delegate_on_robot.DelegateThatReceives(r)
     mqtt_receiver = com.MqttClient(dtr)
     mqtt_receiver.connect_to_pc()
-    
+
     while True:
         time.sleep(0.01)
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
