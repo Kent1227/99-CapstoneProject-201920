@@ -7,3 +7,10 @@
   Winter term, 2018-2019.
 """
 
+class DelegateThatReceives(object):
+    def __init__(self, robot):
+        """:type robot: rosebot.RoseBot"""
+        self.robot = robot
+
+    def forward(self, lSpeed, rSpeed):
+        self.robot.drive_system.go(int(lSpeed), int(rSpeed))
