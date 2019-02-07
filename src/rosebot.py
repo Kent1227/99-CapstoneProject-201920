@@ -131,9 +131,9 @@ class DriveSystem(object):
         Goes straight at the given speed until the intensity returned
         by the color_sensor is less than the given intensity.
         """
-        c = ColorSensor(3)
+        cs = ColorSensor(3)
         self.go(speed, speed)
-        while c.get_reflected_light_intensity() >= intensity:
+        while cs.get_reflected_light_intensity() >= intensity:
             pass
         self.stop()
 
@@ -142,9 +142,9 @@ class DriveSystem(object):
         Goes straight at the given speed until the intensity returned
         by the color_sensor is greater than the given intensity.
         """
-        c = ColorSensor(3)
+        cs = ColorSensor(3)
         self.go(speed, speed)
-        while c.get_reflected_light_intensity() <= intensity:
+        while cs.get_reflected_light_intensity() <= intensity:
             pass
         self.stop()
 
@@ -153,12 +153,26 @@ class DriveSystem(object):
         Goes straight at the given speed until the color returned
         by the color_sensor is equal to the given color.
         """
+        c = define_color(color)
+        if c != None:
+            cs = ColorSensor(3)
+            self.go(speed, speed)
+            while cs.get_color() != c:
+                pass
+            self.stop()
 
     def go_straight_until_color_is_not(self, color, speed):
         """
         Goes straight at the given speed until the color returned
         by the color_sensor is NOT equal to the given color.
         """
+        c = define_color(color)
+        if c != None:
+            cs = ColorSensor(3)
+            self.go(speed, speed)
+            while cs.get_color() == c:
+                pass
+            self.stop()
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared proximity sensor.
@@ -469,6 +483,32 @@ class ColorSensor(object):
             red, green, blue = color_sensor.get_raw_color
         """
 
+def define_color(self,color):
+    """
+    Converts given color name to color sensor integer (to allow testing).
+    :param self:
+    :param color:
+    :return:
+    """
+    if color == "No Color":
+        c = 0
+    elif color == "Black":
+        c = 1
+    elif color == "Blue":
+        c = 2
+    elif color == "Green":
+        c = 3
+    elif color == "Yellow":
+        c = 4
+    elif color == "Red":
+        c = 5
+    elif color == "White":
+        c = 6
+    elif color == "Brown":
+        c = 7
+    else:
+        print("Color not recognized.")
+    return c
 
 class InfraredProximitySensor(object):
     """
