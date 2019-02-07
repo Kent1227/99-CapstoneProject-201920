@@ -8,6 +8,15 @@
 import rosebot
 import mqtt_remote_method_calls as com
 import time
+import shared_gui_delegate_on_robot
+
+def real_thing():
+    robot=rosebot.RoseBot()
+    receiver = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
+    mqtt_receiver = com.MqttClient(receiver)
+    mqtt_receiver.connect_to_pc()
+    while True: #must end to quit
+        time.sleep(0.01)
 
 
 def main():
