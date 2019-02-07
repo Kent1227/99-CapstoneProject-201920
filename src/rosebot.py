@@ -481,7 +481,7 @@ class ColorSensor(object):
             red, green, blue = color_sensor.get_raw_color
         """
 
-def define_color(self,color):
+def define_color(color):
     """
     Converts given color name to color sensor integer (to allow testing).
     :param self:
