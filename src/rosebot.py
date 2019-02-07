@@ -117,8 +117,8 @@ class DriveSystem(object):
         inches_per_degree = (1.3*math.pi)/360
         degrees = inches/inches_per_degree
         self.left_motor.reset_position()
-        self.go(speed,speed)
-        while math.fabs(self.left_motor.get_position())<degrees:
+        self.go(speed, speed)
+        while math.fabs(self.left_motor.get_position()) < degrees:
             pass
         self.stop()
 
@@ -315,6 +315,18 @@ class SoundSystem(object):
         self.tone_maker = ToneMaker()
         self.speech_maker = SpeechMaker()
         self.song_maker = SongMaker()
+
+    def beep_number_of_times(self, number_of_beeps):
+        for k in range(number_of_beeps):
+            self.beeper.beep()
+            time.sleep()
+
+    def play_tone(self, duration, frequency):
+        self.tone_maker.play_tone(frequency, duration)
+
+    def speak(self, given_phrase):
+        self.speech_maker.speak(given_phrase)
+
 
 
 ###############################################################################
