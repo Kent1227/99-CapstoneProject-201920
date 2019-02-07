@@ -146,6 +146,38 @@ def get_control_frame(window, mqtt_sender):
 
     return frame
 
+
+def get_drive_system_frame(window, mqtt_sender):
+    """
+    Constructs and returns a frame on the given window, where the frame has
+    Button objects to exit this program and/or the robot's program (via MQTT).
+      :type  window:       ttk.Frame | ttk.Toplevel
+      :type  mqtt_sender:  com.MqttClient
+    """
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    # Construct the widgets on the frame:
+    frame_label = ttk.Label(frame, text="Drive System")
+    go_straight_for_seconds_button = ttk.Button(frame, text="Go straight for seconds")
+    go_straight_for_inches_time_button = ttk.Button(frame, text="Go straight for inches using time")
+    go_straight_for_inches_encoder_button = ttk.Button(frame, text="Go straight for inches using encoder")
+    entry = ttk.Entry(frame, width=8)
+
+    # Grid the widgets:
+    frame_label.grid(row=0, column=1)
+    go_straight_for_seconds_button.grid(row=2, column=0)
+    go_straight_for_inches_time_button.grid(row=2, column=1)
+    go_straight_for_inches_encoder_button.grid(row=2, column=2)
+    entry.grid(row=1, column=1)
+
+    # Set the Button callbacks:
+    go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, entry)
+    go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, entry)
+    go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, entry)
+
+    return frame
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
@@ -273,3 +305,36 @@ def handle_exit(mqtt_sender):
     Then exit this program.
       :type mqtt_sender: com.MqttClient
     """
+
+
+###############################################################################
+# Handlers for Buttons in the Drive System frame.
+###############################################################################
+def handle_go_straight_seconds(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of seconds
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("go straight for seconds")
+    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get()])
+
+
+def handle_go_straight_inches_time(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of time
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("go straight for inches using time")
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [entry_box.get()])
+
+
+def handle_go_straight_inches_encoder(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of time
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("go straight for inches using encoder")
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get()])
