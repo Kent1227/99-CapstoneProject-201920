@@ -29,7 +29,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go(int(lspeed), int(rspeed))
 
     def stop(self):
-        self.stop()
+        self.robot.drive_system.stop()
 
     # Arm and Claw functions
 
