@@ -20,13 +20,13 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go(int(lspeed), int(rspeed))
 
     def backward(self, lspeed, rspeed):
-        self.robot.drive_system.go(int(lspeed), int(rspeed))
+        self.robot.drive_system.go(-int(lspeed), -int(rspeed))
 
     def left(self, lspeed, rspeed):
-        self.robot.drive_system.go(int(lspeed), int(rspeed))
+        self.robot.drive_system.go(-int(lspeed), int(rspeed))
 
     def right(self, lspeed, rspeed):
-        self.robot.drive_system.go(int(lspeed), int(rspeed))
+        self.robot.drive_system.go(int(lspeed), -int(rspeed))
 
     def stop(self):
         self.robot.drive_system.stop()

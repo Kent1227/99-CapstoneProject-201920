@@ -15,7 +15,7 @@ def real_thing():
     receiver = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_receiver = com.MqttClient(receiver)
     mqtt_receiver.connect_to_pc()
-    while receiver.is_time_to_stop == False: #must end to quit
+    while receiver.leave == False: #must end to quit
         time.sleep(0.01)
 
 
@@ -151,5 +151,5 @@ def run_test_move_arm_to_position():
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
-main()
-# real_thing()
+# main()
+real_thing()
