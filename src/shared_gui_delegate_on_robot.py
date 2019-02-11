@@ -12,6 +12,7 @@ class DelegateThatReceives(object):
     def __init__(self, robot):
         """:type robot: rosebot.RoseBot"""
         self.robot = robot
+        self.leave = False
 
     # Teleoperation functions
 
@@ -47,14 +48,26 @@ class DelegateThatReceives(object):
     # Control
 
     def quit(self):
-        self.quit()
-
-    def exit(self):
-        self.exit()
+        self.leave = True
 
     # Drive system
 
-    def stright_for_seconds(self, seconds):
+    def go_straight_for_seconds(self, seconds):
+        self.robot.drive_system.go_straight_for_seconds(seconds)
 
+    def go_straight_for_inches_using_time(self, inches):
+        self.robot.drive_system.go_straight_for_inches_using_time(inches)
+
+    def go_straight_for_inches_using_encoder(self, inches):
+        self.robot.drive_system.go_straight_for_inches_using_encoder(inches)
 
     # Sound
+
+    def beep_number_of_times(self, number):
+        self.robot.sound_system.beep_number_of_times(number)
+
+    def play_tone(self, frequency, duration):
+        self.robot.sound_system.play_tone(duration, frequency)
+
+    def speak(self, phrase):
+        self.robot.sound_system.speak(phrase)

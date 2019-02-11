@@ -28,6 +28,8 @@ def real_thing():
 
     while True:
         time.sleep(0.01)
+        if dtr.leave is True:
+            break
 
 
 # -----------------------------------------------------------------------------
