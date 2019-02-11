@@ -150,7 +150,7 @@ def get_control_frame(window, mqtt_sender):
 def get_drive_system_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame has
-    Button objects to exit this program and/or the robot's program (via MQTT).
+    Button objects to drive the robot using sensors (via MQTT).
       :type  window:       ttk.Frame | ttk.Toplevel
       :type  mqtt_sender:  com.MqttClient
     """
@@ -177,6 +177,36 @@ def get_drive_system_frame(window, mqtt_sender):
     go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, entry)
 
     return frame
+
+
+def get_sound_frame(window, mqtt_sender):
+    """
+    Constructs and returns a frame on the given window, where the frame has
+    Button objects to execute certain sound functions (via MQTT).
+      :type  window:       ttk.Frame | ttk.Toplevel
+      :type  mqtt_sender:  com.MqttClient
+    """
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Sound")
+    beep_button = ttk.Button(frame, text="Beep for number of times")
+    tone_button = ttk.Button(frame, text="Play Tone for given duration")
+    speak_button = ttk.Button(frame, text="Speak a phrase")
+    freq_entry = ttk.Entry(frame, text="Frequency")
+    duration_entry = ttk.Entry(frame, text="Duration")
+    num_entry = ttk.Entry(frame, text="Number of times")
+    phrase_entry = ttk.Entry(frame, text="Phrase")
+
+    frame_label.grid(row=0, column=1)
+    beep_button.grid(row=1, column=0)
+    num_entry.grid(row=1, column=2)
+    tone_button.grid(row=2, column=0)
+    freq_entry.grid(row=2, column=1)
+    duration_entry.grid(row=2, column=2)
+    speak_button.grid(row=3, column=0)
+    phrase_entry.grid(row=3, column=2)
+
 
 ###############################################################################
 ###############################################################################
@@ -338,3 +368,36 @@ def handle_go_straight_inches_encoder(mqtt_sender, entry_box):
     """
     print("go straight for inches using encoder")
     mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get()])
+
+
+###############################################################################
+# Handlers for Buttons in the Sound frame.
+###############################################################################
+def handle_beep_number_of_times(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of time
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("beep number of times")
+    mqtt_sender.send_message("beep_number_of_times", [entry_box.get()])
+
+
+def handle_play_tone(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of time
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("play tone")
+    mqtt_sender.send_message("play_tone", [entry_box.get()])
+
+
+def handle_speak(mqtt_sender, entry_box):
+    """
+    Tells the robot to go straight for a given amount of time
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("speak")
+    mqtt_sender.send_message("speak", [entry_box.get()])
