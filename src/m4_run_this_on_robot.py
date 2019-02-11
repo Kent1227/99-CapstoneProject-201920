@@ -25,9 +25,9 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    arm_tests()
     drive_distance_tests()
     sound_tests()
+    arm_tests()
     # drive_color_tests()
     #     Color tests are [Black, Red, Brown, White]
 
@@ -38,21 +38,30 @@ def sound_tests():
 
 def beep_tests():
     robot = rosebot.RoseBot()
-    robot.sound_system.beep_number_of_times(3).wait()
-    robot.sound_system.beep_number_of_times(1).wait()
-    robot.sound_system.beep_number_of_times(2).wait()
+    robot.sound_system.beep_number_of_times(3)
+    time.sleep(.2)
+    robot.sound_system.beep_number_of_times(1)
+    time.sleep(.2)
+    robot.sound_system.beep_number_of_times(2)
+    print("Beep test successful!")
 
 def tone_tests():
     robot = rosebot.RoseBot()
-    robot.sound_system.play_tone(50,300).wait()
-    robot.sound_system.play_tone(100,100).wait()
-    robot.sound_system.play_tone(60, 500).wait()
+    robot.sound_system.play_tone(500,300)
+    time.sleep(.2)
+    robot.sound_system.play_tone(1000,100)
+    time.sleep(.2)
+    robot.sound_system.play_tone(600, 500)
+    print("Tone test successful!")
 
 def speak_tests():
     robot = rosebot.RoseBot()
-    robot.sound_system.speak("Good morning!").wait()
-    robot.sound_system.speak("Testing").wait()
-    robot.sound_system.speak("Test finished").wait()
+    robot.sound_system.speak("Good morning!")
+    time.sleep(1.5)
+    robot.sound_system.speak("Testing")
+    time.sleep(1)
+    robot.sound_system.speak("Test finished")
+    print("Speak test successful!")
 
 def drive_distance_tests():
     drive_for_seconds_tests()
@@ -63,19 +72,22 @@ def drive_for_inches_encoder_tests():
     robot = rosebot.RoseBot()
     robot.drive_system.go_straight_for_inches_using_encoder(2,-30)
     robot.drive_system.go_straight_for_inches_using_encoder(7, 70)
-    robot.drive_system.go_straight_for_inches_using_encoder(8, 100)
+    robot.drive_system.go_straight_for_inches_using_encoder(8, -100)
+    print("Drive for inches-encoder successful!")
 
 def drive_for_inches_time_tests():
     robot = rosebot.RoseBot()
     robot.drive_system.go_straight_for_inches_using_time(8,100)
     robot.drive_system.go_straight_for_inches_using_time(7, -70)
     robot.drive_system.go_straight_for_inches_using_time(2, 30)
+    print("Drive for inches-time successful!")
 
 def drive_for_seconds_tests():
     robot = rosebot.RoseBot()
     robot.drive_system.go_straight_for_seconds(4,100)
     robot.drive_system.go_straight_for_seconds(6, -60)
     robot.drive_system.go_straight_for_seconds(7, 43)
+    print("Drive for seconds successful!")
 
 def drive_color_tests():
     run_drive_greater_intensity_tests()

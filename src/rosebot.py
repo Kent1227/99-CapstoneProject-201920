@@ -379,7 +379,7 @@ class SoundSystem(object):
 
     def beep_number_of_times(self, number_of_beeps):
         for k in range(number_of_beeps):
-            self.beeper.beep().wait(0.1)
+            self.beeper.beep().wait()
 
     def play_tone(self, duration, frequency):
         self.tone_maker.play_tone(frequency, duration)
