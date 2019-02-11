@@ -15,7 +15,7 @@ def real_thing():
     receiver = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_receiver = com.MqttClient(receiver)
     mqtt_receiver.connect_to_pc()
-    while True: #must end to quit
+    while receiver.is_time_to_stop == False: #must end to quit
         time.sleep(0.01)
 
 
