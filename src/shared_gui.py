@@ -207,6 +207,11 @@ def get_sound_frame(window, mqtt_sender):
     speak_button.grid(row=3, column=0)
     phrase_entry.grid(row=3, column=2)
 
+    beep_button["command"] = lambda: handle_beep_number_of_times(mqtt_sender, num_entry)
+    tone_button["command"] = lambda: handle_play_tone(mqtt_sender, freq_entry, duration_entry)
+    speak_button["command"] = lambda: handle_speak(mqtt_sender, phrase_entry)
+
+    return frame
 
 ###############################################################################
 ###############################################################################
@@ -330,6 +335,7 @@ def handle_quit(mqtt_sender):
     print('quit')
     mqtt_sender.send_message('quit')
 
+
 def handle_exit(mqtt_sender):
     """
     Tell the robot's program to stop its loop (and hence quit).
@@ -387,14 +393,15 @@ def handle_beep_number_of_times(mqtt_sender, entry_box):
     mqtt_sender.send_message("beep_number_of_times", [entry_box.get()])
 
 
-def handle_play_tone(mqtt_sender, entry_box):
+def handle_play_tone(mqtt_sender, entry_box, entry_box2):
     """
     Tells the robot to go straight for a given amount of time
       :type mqtt_sender: com.MqttClient
       :type entry_box: ttk.Entry
+      :type entry_box2: ttk.Entry
     """
     print("play tone")
-    mqtt_sender.send_message("play_tone", [entry_box.get()])
+    mqtt_sender.send_message("play_tone", [entry_box.get(), entry_box2.get()])
 
 
 def handle_speak(mqtt_sender, entry_box):
