@@ -25,16 +25,62 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    # arm_tests()
-    drive_color_tests()
+    arm_tests()
+    drive_distance_tests()
+    sound_tests()
+    # drive_color_tests()
     #     Color tests are [Black, Red, Brown, White]
-    # drive_distance_tests()
+
+def sound_tests():
+    beep_tests()
+    tone_tests()
+    speak_tests()
+
+def beep_tests():
+    robot = rosebot.RoseBot()
+    robot.sound_system.beep_number_of_times(3).wait()
+    robot.sound_system.beep_number_of_times(1).wait()
+    robot.sound_system.beep_number_of_times(2).wait()
+
+def tone_tests():
+    robot = rosebot.RoseBot()
+    robot.sound_system.play_tone(50,300).wait()
+    robot.sound_system.play_tone(100,100).wait()
+    robot.sound_system.play_tone(60, 500).wait()
+
+def speak_tests():
+    robot = rosebot.RoseBot()
+    robot.sound_system.speak("Good morning!").wait()
+    robot.sound_system.speak("Testing").wait()
+    robot.sound_system.speak("Test finished").wait()
+
+def drive_distance_tests():
+    drive_for_seconds_tests()
+    drive_for_inches_time_tests()
+    drive_for_inches_encoder_tests()
+
+def drive_for_inches_encoder_tests():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_straight_for_inches_using_encoder(2,-30)
+    robot.drive_system.go_straight_for_inches_using_encoder(7, 70)
+    robot.drive_system.go_straight_for_inches_using_encoder(8, 100)
+
+def drive_for_inches_time_tests():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_straight_for_inches_using_time(8,100)
+    robot.drive_system.go_straight_for_inches_using_time(7, -70)
+    robot.drive_system.go_straight_for_inches_using_time(2, 30)
+
+def drive_for_seconds_tests():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_straight_for_seconds(4,100)
+    robot.drive_system.go_straight_for_seconds(6, -60)
+    robot.drive_system.go_straight_for_seconds(7, 43)
 
 def drive_color_tests():
     run_drive_greater_intensity_tests()
     run_drive_lesser_intensity_tests()
     run_drive_color_tests()
-    run_drive_not_color_tests()
 
 def run_drive_greater_intensity_tests():
     robot = rosebot.RoseBot()
@@ -47,15 +93,12 @@ def run_drive_lesser_intensity_tests():
 def run_drive_color_tests():
     robot = rosebot.RoseBot()
     robot.drive_system.go_straight_until_color_is("Black",50)
-    robot.drive_system.go_straight_until_color_is("Red", 50)
-    robot.drive_system.go_straight_until_color_is("Brown", 50)
-    robot.drive_system.go_straight_until_color_is("White", 50)
-
-def run_drive_not_color_tests():
-    robot = rosebot.RoseBot()
     robot.drive_system.go_straight_until_color_is_not("Black", 50)
+    robot.drive_system.go_straight_until_color_is("Red", 50)
     robot.drive_system.go_straight_until_color_is_not("Red", 50)
+    robot.drive_system.go_straight_until_color_is("Brown", 50)
     robot.drive_system.go_straight_until_color_is_not("Brown", 50)
+    robot.drive_system.go_straight_until_color_is("White", 50)
     robot.drive_system.go_straight_until_color_is_not("White", 50)
 
 def arm_tests():
@@ -97,3 +140,4 @@ def run_test_move_arm_to_position():
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
 main()
+# real_thing()
