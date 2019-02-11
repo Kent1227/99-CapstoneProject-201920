@@ -34,16 +34,16 @@ class DelegateThatReceives(object):
     # Arm and Claw functions
 
     def raise_arm(self):
-        self.raise_arm()
+        self.robot.arm_and_claw.raise_arm()
 
     def lower_arm(self):
-        self.lower_arm()
+        self.robot.arm_and_claw.lower_arm()
 
     def calibrate_arm(self):
-        self.calibrate_arm()
+        self.robot.arm_and_claw.calibrate_arm()
 
     def move_arm_to_position(self, desired_position):
-        self.move_arm_to_position(desired_position)
+        self.robot.arm_and_claw.move_arm_to_position(desired_position)
 
     # Control
 
