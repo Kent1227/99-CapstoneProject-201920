@@ -13,8 +13,10 @@ class DelegateThatReceives(object):
         """:type robot: rosebot.RoseBot"""
         self.robot = robot
 
-    def forward(self, lSpeed, rSpeed):
-        self.robot.drive_system.go(int(lSpeed), int(rSpeed))
+    # Teleoperation functions
+
+    def forward(self, lspeed, rspeed):
+        self.robot.drive_system.go(int(lspeed), int(rspeed))
 
     def backward(self, lspeed, rspeed):
         self.robot.drive_system.go(int(lspeed), int(rspeed))
@@ -26,4 +28,33 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go(int(lspeed), int(rspeed))
 
     def stop(self):
-        self.robot.drive_system.stop()
+        self.stop()
+
+    # Arm and Claw functions
+
+    def raise_arm(self):
+        self.raise_arm()
+
+    def lower_arm(self):
+        self.lower_arm()
+
+    def calibrate_arm(self):
+        self.calibrate_arm()
+
+    def move_arm_to_position(self, desired_position):
+        self.move_arm_to_position(desired_position)
+
+    # Control
+
+    def quit(self):
+        self.quit()
+
+    def exit(self):
+        self.exit()
+
+    # Drive system
+
+    def stright_for_seconds(self, seconds):
+
+
+    # Sound
