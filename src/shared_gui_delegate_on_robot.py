@@ -52,22 +52,22 @@ class DelegateThatReceives(object):
 
     # Drive system
 
-    def go_straight_for_seconds(self, seconds):
-        self.robot.drive_system.go_straight_for_seconds(seconds)
+    def go_straight_for_seconds(self, seconds, speed):
+        self.robot.drive_system.go_straight_for_seconds(seconds, speed)
 
-    def go_straight_for_inches_using_time(self, inches):
-        self.robot.drive_system.go_straight_for_inches_using_time(inches)
+    def go_straight_for_inches_using_time(self, inches, speed):
+        self.robot.drive_system.go_straight_for_inches_using_time(inches, speed)
 
-    def go_straight_for_inches_using_encoder(self, inches):
-        self.robot.drive_system.go_straight_for_inches_using_encoder(inches)
+    def go_straight_for_inches_using_encoder(self, inches, speed):
+        self.robot.drive_system.go_straight_for_inches_using_encoder(inches, speed)
 
     # Sound
 
-    def beep_number_of_times(self, number):
-        self.robot.sound_system.beep_number_of_times(number)
+    def beep_number_of_times(self, number_of_beeps):
+        self.robot.sound_system.beep_number_of_times(number_of_beeps)
 
     def play_tone(self, duration, frequency):
         self.robot.sound_system.play_tone(duration, frequency)
 
-    def speak(self, phrase):
-        self.robot.sound_system.speak(phrase)
+    def speak(self, given_phrase):
+        self.robot.sound_system.speak(given_phrase)

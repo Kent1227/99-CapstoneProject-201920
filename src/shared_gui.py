@@ -365,7 +365,7 @@ def handle_go_straight_seconds(mqtt_sender, entry_box):
       :type entry_box: ttk.Entry
     """
     print("go straight for seconds")
-    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get()])
+    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), entry_box.get()])
 
 
 def handle_go_straight_inches_time(mqtt_sender, entry_box):
