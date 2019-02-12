@@ -162,7 +162,7 @@ class DriveSystem(object):
         the color sensor's color.
         """
         c = define_color(color)
-        if c != None:
+        if c is not None:
             cs = ColorSensor(3)
             self.go(speed, speed)
             while cs.get_color() != c:
@@ -178,7 +178,7 @@ class DriveSystem(object):
         listed in the ColorSensor class.
         """
         c = define_color(color)
-        if c != None:
+        if c is not None:
             cs = ColorSensor(3)
             self.go(speed, speed)
             while cs.get_color() == c:
@@ -386,7 +386,7 @@ class SoundSystem(object):
         self.tone_maker.play_tone(int(frequency), int(duration))
 
     def speak(self, given_phrase):
-        self.speech_maker.speak(given_phrase)
+        self.speech_maker.speak(str(given_phrase))
 
 
 ###############################################################################
@@ -577,6 +577,7 @@ class ColorSensor(object):
             red, green, blue = color_sensor.get_raw_color
         """
 
+
 def define_color(color):
     """
     Converts given color name to color sensor integer (to allow testing).
@@ -607,6 +608,8 @@ def define_color(color):
 ###############################################################################
 # InfraredProximitySensor
 ###############################################################################
+
+
 class InfraredProximitySensor(object):
     """
     The infrared sensor when it is in the mode in which it emits infrared light
