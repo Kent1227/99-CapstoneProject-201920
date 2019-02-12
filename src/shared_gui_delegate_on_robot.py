@@ -66,7 +66,7 @@ class DelegateThatReceives(object):
     def beep_number_of_times(self, number):
         self.robot.sound_system.beep_number_of_times(number)
 
-    def play_tone(self, frequency, duration):
+    def play_tone(self, duration, frequency):
         self.robot.sound_system.play_tone(duration, frequency)
 
     def speak(self, phrase):
