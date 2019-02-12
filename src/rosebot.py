@@ -315,14 +315,15 @@ class ArmAndClaw(object):
         Move its Arm to the given position, where 0 means all the way DOWN.
         The robot must have previously calibrated its Arm.
         """
+        desired_arm_position = int(desired_arm_position)
         if self.motor.get_position() > desired_arm_position:
             self.motor.turn_on(-100)
             while True:
-                if self.motor.get_position() < desired_arm_position:
+                if self.motor.get_position() <= desired_arm_position:
                     self.motor.turn_off()
                     break
 
-        if self.motor.get_position() < desired_arm_position:
+        else:
             self.motor.turn_on(100)
             while True:
                 if self.motor.get_position() > desired_arm_position:
@@ -378,11 +379,11 @@ class SoundSystem(object):
         self.song_maker = SongMaker()
 
     def beep_number_of_times(self, number_of_beeps):
-        for k in range(number_of_beeps):
+        for k in range(int(number_of_beeps)):
             self.beeper.beep().wait()
 
     def play_tone(self, duration, frequency):
-        self.tone_maker.play_tone(frequency, duration)
+        self.tone_maker.play_tone(int(frequency), int(duration))
 
     def speak(self, given_phrase):
         self.speech_maker.speak(given_phrase)
