@@ -365,7 +365,7 @@ def handle_go_straight_seconds(mqtt_sender, entry_box):
       :type entry_box: ttk.Entry
     """
     print("go straight for seconds")
-    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), entry_box.get()])
+    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), 100])
 
 
 def handle_go_straight_inches_time(mqtt_sender, entry_box):
@@ -375,7 +375,7 @@ def handle_go_straight_inches_time(mqtt_sender, entry_box):
       :type entry_box: ttk.Entry
     """
     print("go straight for inches using time")
-    mqtt_sender.send_message("go_straight_for_inches_using_time", [entry_box.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [entry_box.get(), 100])
 
 
 def handle_go_straight_inches_encoder(mqtt_sender, entry_box):
@@ -385,7 +385,7 @@ def handle_go_straight_inches_encoder(mqtt_sender, entry_box):
       :type entry_box: ttk.Entry
     """
     print("go straight for inches using encoder")
-    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get()])
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get(), 100])
 
 
 ###############################################################################

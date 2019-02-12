@@ -94,7 +94,7 @@ class DriveSystem(object):
         start = time.time()
         self.go(speed, speed)
         while True:
-            if time.time() - start >= seconds:
+            if time.time() - start >= int(seconds):
                 self.stop()
                 break
 
@@ -104,8 +104,8 @@ class DriveSystem(object):
         for the given number of inches, using the approximate
         conversion factor of 10.0 inches per second at 100 (full) speed.
         """
-        seconds_per_inch = 10.0
-        seconds = abs(inches * seconds_per_inch / speed)
+        seconds_per_inch = 10
+        seconds = abs(int(inches) * seconds_per_inch / speed)
         self.go_straight_for_seconds(seconds, speed)
 
     def go_straight_for_inches_using_encoder(self, inches, speed):
@@ -115,7 +115,7 @@ class DriveSystem(object):
         using the encoder (degrees traveled sensor) built into the motors.
         """
         inches_per_degree = (1.3*math.pi)/360
-        degrees = inches/inches_per_degree
+        degrees = int(inches)/inches_per_degree
         self.left_motor.reset_position()
         self.go(speed, speed)
         while math.fabs(self.left_motor.get_position()) < degrees:
