@@ -25,8 +25,8 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    drive_distance_tests()
-    sound_tests()
+    # drive_distance_tests()
+    # sound_tests()
     arm_tests()
     # drive_color_tests()
     #     Color tests are [Black, Red, Brown, White]

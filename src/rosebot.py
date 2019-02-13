@@ -161,9 +161,9 @@ class DriveSystem(object):
         then use the   get_color_as_name   method to access
         the color sensor's color.
         """
-        c = define_color(color)
+        cs = ColorSensor(3)
+        c = cs.get_color_number_from_color_name(color)
         if c is not None:
-            cs = ColorSensor(3)
             self.go(speed, speed)
             while cs.get_color() != c:
                 pass
@@ -177,9 +177,9 @@ class DriveSystem(object):
         Colors can be integers from 0 to 7 or any of the strings
         listed in the ColorSensor class.
         """
-        c = define_color(color)
+        cs = ColorSensor(3)
+        c = cs.get_color_number_from_color_name(color)
         if c is not None:
-            cs = ColorSensor(3)
             self.go(speed, speed)
             while cs.get_color() == c:
                 pass
@@ -577,33 +577,6 @@ class ColorSensor(object):
             red, green, blue = color_sensor.get_raw_color
         """
 
-
-def define_color(color):
-    """
-    Converts given color name to color sensor integer (to allow testing).
-    :param self:
-    :param color:
-    :return:
-    """
-    if color == "No Color":
-        c = 0
-    elif color == "Black":
-        c = 1
-    elif color == "Blue":
-        c = 2
-    elif color == "Green":
-        c = 3
-    elif color == "Yellow":
-        c = 4
-    elif color == "Red":
-        c = 5
-    elif color == "White":
-        c = 6
-    elif color == "Brown":
-        c = 7
-    else:
-        print("Color not recognized.")
-    return c
 
 ###############################################################################
 # InfraredProximitySensor
