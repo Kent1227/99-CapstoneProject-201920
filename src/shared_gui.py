@@ -221,6 +221,46 @@ def get_sound_frame(window, mqtt_sender):
 
     return frame
 
+
+def get_proximity_frame(window, mqtt_sender):
+
+    #range
+    #delta
+    #button_drive_forward_until_in_range
+    #button_drive_backward_until_out_of_range
+    #button_drive_until_within_range_+_or_-_delta
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Proximity Sensor")
+    forward_button = ttk.Button(frame, text="Drive Forward until in Range")
+    backward_button = ttk.Button(frame, text="Drive Backward until out of Range")
+    range_button = ttk.Button(frame, text="Drive until within Range +/- Delta")
+    range_entry = ttk.Entry(frame)
+    delta_entry = ttk.Entry(frame)
+    range_label = ttk.Label(frame, text="Range:")
+    delta_label = ttk.Label(frame, text="Delta:")
+    speed_entry = ttk.Entry(frame)
+    speed_label = ttk.Label(frame, text="Speed:")
+
+    frame_label.grid(row=0, column=1)
+    forward_button.grid(row=1, column=0)
+    range_label.grid(row=1, column=1)
+    range_entry.grid(row=1, column=2)
+    backward_button.grid(row=2, column=0)
+    delta_label.grid(row=2, column=1)
+    delta_entry.grid(row=2, column=2)
+    range_button.grid(row=3, column=0)
+    speed_label.grid(row=3, column=1)
+    speed_entry.grid(row=3, column=2)
+
+
+    forward_button["command"] = lambda: handle_proximity_forward(mqtt_sender, range_entry, speed_entry)
+    backward_button["command"] = lambda: handle_proximity_backward(mqtt_sender, range_entry, speed_entry)
+    range_button["command"] = lambda: handle_proximity_range(mqtt_sender, range_entry, delta_entry, speed_entry)
+
+    return frame
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
@@ -420,3 +460,37 @@ def handle_speak(mqtt_sender, entry_box):
     """
     print("speak")
     mqtt_sender.send_message("speak", [entry_box.get()])
+
+
+def handle_proximity_forward(mqtt_sender, entry_box1, entry_box2):
+    """
+    Tells the robot to go forward until within range using proximity sensor.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("use_proximity_to_move_forward")
+    mqtt_sender.send_message("use_proximity_to_move_forward",
+                             [entry_box1.get(), entry_box2.get()])
+
+
+def handle_proximity_backward(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to go backward until out of range using proximity sensor.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box: ttk.Entry
+    """
+    print("use_proximity_to_move_backward")
+    mqtt_sender.send_message("use_proximity_to_move_backward",
+                             [entry_box1.get(),entry_box2.get()])
+
+
+def handle_proximity_range(mqtt_sender, entry_box1, entry_box2, entry_box3):
+    """
+     Tells the robot to go an exact range +/- the delta using proximity sensor.
+       :type mqtt_sender: com.MqttClient
+       :type entry_box: ttk.Entry
+       :type entry_box2: ttk.Entry
+     """
+    print("use_proximity_to_move_exact_range")
+    mqtt_sender.send_message("use_proximity_to_move_exact_range",
+                             [entry_box1.get(),entry_box2.get(), entry_box3.get()])
