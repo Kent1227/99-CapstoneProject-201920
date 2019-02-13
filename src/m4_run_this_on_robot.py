@@ -25,11 +25,28 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
+    drive_proximity_tests()
+    drive_camera_tests()
     # drive_distance_tests()
     # sound_tests()
-    arm_tests()
+    # arm_tests()
     # drive_color_tests()
     #     Color tests are [Black, Red, Brown, White]
+
+def drive_proximity_tests():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_forward_until_distance_is_less_than(12,60)
+    robot.drive_system.go_backward_until_distance_is_greater_than(18, 50)
+    robot.drive_system.go_until_distance_is_within(13,1,40)
+
+def drive_camera_tests():
+    robot = rosebot.RoseBot()
+    robot.drive_system.spin_clockwise_until_sees_object(50,40)
+    robot.drive_system.display_camera_data()
+    time.sleep(3)
+    robot.drive_system.spin_counterclockwise_until_sees_object(50,40)
+    robot.drive_system.display_camera_data()
+
 
 def sound_tests():
     beep_tests()
