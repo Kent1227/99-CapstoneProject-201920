@@ -193,6 +193,11 @@ class DriveSystem(object):
         Goes forward at the given speed until the robot is less than
         the given number of inches from the nearest object that it senses.
         """
+        ps = InfraredProximitySensor(4)
+        self.go(speed,speed)
+        while ps.get_distance_in_inches() >= inches:
+            pass
+        self.stop()
 
     def go_backward_until_distance_is_greater_than(self, inches, speed):
         """
@@ -200,6 +205,11 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         Assumes that it senses an object when it starts.
         """
+        ps = InfraredProximitySensor(4)
+        self.go(-speed, -speed)
+        while ps.get_distance_in_inches() <= inches:
+            pass
+        self.stop()
 
     def go_until_distance_is_within(self, delta, inches, speed):
         """
@@ -211,6 +221,14 @@ class DriveSystem(object):
         the robot should move until it is between 6.8 and 7.4 inches
         from the object.
         """
+        ps = InfraredProximitySensor(4)
+        while True:
+            if ps.get_distance_in_inches() > inches+delta:
+                self.go_forward_until_distance_is_less_than(inches+delta,speed)
+            elif ps.get_distance_in_inches() < inches+delta:
+                self.go_backward_until_distance_is_greater_than(inches-delta,speed)
+            else:
+                break
 
 
     # -------------------------------------------------------------------------
