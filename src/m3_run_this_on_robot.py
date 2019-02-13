@@ -20,12 +20,14 @@ def main():
 
 def real_thing():
     robot = rosebot.RoseBot()
-    delegate_that_recieves = delegte_that_recieves()
-    mqtt_reciever = com.MqttClient(delegate_that_recieves)
+    delegate = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
+    mqtt_reciever = com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
 
     while True:
         time.sleep(0.01)
+        if delegate.is_time_to_stop is True:
+            break
 
 
 # -----------------------------------------------------------------------------
