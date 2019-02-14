@@ -8,6 +8,7 @@
 """
 
 import m4_run_this_on_robot as m4
+import m3_run_this_on_robot as m3
 
 class DelegateThatReceives(object):
     def __init__(self, robot):
@@ -84,8 +85,8 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_until_distance_is_within(delta, range, speed)
 
     # m3 Beep_Proximity
-    def beep_proximity(self, initial, delta):
-        self.go_forward_beeping
+    def m3_beep_proximity(self, initial, delta):
+        m3.m3_beep_proximity(initial, delta)
 
     # m4 led_proximity
     def m4_led_proximity(self, initial, delta, speed):
