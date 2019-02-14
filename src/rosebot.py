@@ -94,7 +94,7 @@ class DriveSystem(object):
         start = time.time()
         self.go(speed, speed)
         while True:
-            if time.time() - start >= int(seconds):
+            if time.time() - start >= float(seconds):
                 self.stop()
                 break
 
@@ -107,6 +107,7 @@ class DriveSystem(object):
         seconds_per_inch = 10
         seconds = abs(int(inches) * seconds_per_inch / speed)
         self.go_straight_for_seconds(seconds, speed)
+        print(seconds)
 
     def go_straight_for_inches_using_encoder(self, inches, speed):
         """
@@ -132,8 +133,8 @@ class DriveSystem(object):
         by the color_sensor is less than the given intensity.
         """
         cs = ColorSensor(3)
-        self.go(speed, speed)
-        while cs.get_reflected_light_intensity() >= intensity:
+        self.go(int(speed), int(speed))
+        while cs.get_reflected_light_intensity() >= int(intensity):
             pass
         self.stop()
 
@@ -143,8 +144,8 @@ class DriveSystem(object):
         by the color_sensor is greater than the given intensity.
         """
         cs = ColorSensor(3)
-        self.go(speed, speed)
-        while cs.get_reflected_light_intensity() <= intensity:
+        self.go(int(speed), int(speed))
+        while cs.get_reflected_light_intensity() <= int(intensity):
             pass
         self.stop()
 
