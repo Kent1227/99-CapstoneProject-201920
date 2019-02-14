@@ -10,7 +10,11 @@ import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot
 
-def real_thing():
+def main():
+    tests()
+    # shared_gui
+
+def shared_gui():
     robot=rosebot.RoseBot()
     receiver = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_receiver = com.MqttClient(receiver)
@@ -18,13 +22,48 @@ def real_thing():
     while receiver.leave == False: #must end to quit
         time.sleep(0.01)
 
+def feature91(initial,rate,speed):
+    robot = rosebot.RoseBot()
+    ps = robot.sensor_system.ir_proximity_sensor
+    robot.drive_system.go(speed,speed)
+    while ps.get_distance_in_inches() > 4:
+        robot.sound_system.beeper.beep()
+        time.sleep(initial+(rate/ps.get_distance_in_inches()))
+    robot.drive_system.stop()
 
-def main():
+def feature10(direction):
+    robot = rosebot.RoseBot()
+    d=robot.drive_system
+    c= robot.sensor_system.camera
+    if direction == "right":
+        d.spin_clockwise_until_sees_object(50,200)
+    elif direction == "left":
+        d.spin_counterclockwise_until_sees_object(50,200)
+    d.stop()
+    camera_aim()
+    feature91(1,0.1,70)
+
+def camera_aim():
+    robot = rosebot.RoseBot()
+    d = robot.drive_system
+    c = robot.sensor_system.camera
+    while True:
+        while c.get_biggest_blob().center.x() > 10:
+            d.go(20, -20)
+        d.stop()
+        while c.get_biggest_blob().center.x() < -10:
+            d.go(-20, 20)
+        d.stop()
+        if c.get_biggest_blob().center.x() < 10 and c.get_biggest_blob().center.x() > -10:
+            break
+
+def tests():
     """
     This code, which must run on the EV3 ROBOT:
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
+    print("Tests started!")
     drive_proximity_tests()
     drive_camera_tests()
     # drive_distance_tests()
@@ -46,7 +85,6 @@ def drive_camera_tests():
     time.sleep(3)
     robot.drive_system.spin_counterclockwise_until_sees_object(50,40)
     robot.drive_system.display_camera_data()
-
 
 def sound_tests():
     beep_tests()
@@ -168,5 +206,4 @@ def run_test_move_arm_to_position():
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
-# main()
-real_thing()
+main()
