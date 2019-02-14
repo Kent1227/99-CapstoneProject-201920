@@ -83,10 +83,10 @@ class DelegateThatReceives(object):
     def use_proximity_to_move_exact_range(self, range, delta, speed):
         self.robot.drive_system.go_until_distance_is_within(delta, range, speed)
 
-    #m3 Beep_Proximity
+    # m3 Beep_Proximity
     def beep_proximity(self, initial, delta):
         self.go_forward_beeping
 
-    #m4 led_proximity
-    def m4_led_proximity(self,initial,delta,speed):
-        m4.m4_led_proximity(initial,delta,speed)
+    # m4 led_proximity
+    def m4_led_proximity(self, initial, delta, speed):
+        m4.m4_led_proximity(initial, delta, speed)

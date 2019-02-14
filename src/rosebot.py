@@ -230,7 +230,6 @@ class DriveSystem(object):
             else:
                 break
 
-
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.
     # -------------------------------------------------------------------------
