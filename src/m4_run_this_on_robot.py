@@ -22,26 +22,42 @@ def shared_gui():
     while receiver.leave == False: #must end to quit
         time.sleep(0.01)
 
-def feature91(initial,rate,speed):
+def m4_led_proximity(initial,delta,speed):
     robot = rosebot.RoseBot()
     ps = robot.sensor_system.ir_proximity_sensor
+    l = robot.led_system
     robot.drive_system.go(speed,speed)
     while ps.get_distance_in_inches() > 4:
-        robot.sound_system.beeper.beep()
-        time.sleep(initial+(rate/ps.get_distance_in_inches()))
+        rate = initial+delta/ps.get_distance_in_inches()
+        cycle_leds(rate,l)
     robot.drive_system.stop()
 
-def feature10(direction):
+def cycle_leds(rate,led):
+    while True:
+        for k in range(3):
+            if k == 0:
+                led.left_led.turn_on()
+            elif k == 1:
+                led.left_led.turn_off()
+                led.right_led.turn_on()
+            elif k == 2:
+                led.left_led.turn_on()
+            else:
+                led.left_led.turn_off()
+                led.right_led.turn_off()
+            time.sleep(rate)
+
+def m4_led_retrieve(direction,speed):
     robot = rosebot.RoseBot()
     d=robot.drive_system
     c= robot.sensor_system.camera
-    if direction == "right":
-        d.spin_clockwise_until_sees_object(50,200)
-    elif direction == "left":
-        d.spin_counterclockwise_until_sees_object(50,200)
+    if direction == "CW":
+        d.spin_clockwise_until_sees_object(speed,200)
+    elif direction == "CCW":
+        d.spin_counterclockwise_until_sees_object(speed,200)
     d.stop()
     camera_aim()
-    feature91(1,0.1,70)
+    m4_led_proximity(1,0.1,speed)
 
 def camera_aim():
     robot = rosebot.RoseBot()

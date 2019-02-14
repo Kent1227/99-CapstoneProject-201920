@@ -7,6 +7,7 @@
   Winter term, 2018-2019.
 """
 
+import m4_run_this_on_robot as m4
 
 class DelegateThatReceives(object):
     def __init__(self, robot):
@@ -74,14 +75,18 @@ class DelegateThatReceives(object):
 
     # Proximity Sensor
     def use_proximity_to_move_forward(self, range, speed):
-        self.go_forward_until_distance_is_less_than(range, speed)
+        self.robot.drive_system.go_forward_until_distance_is_less_than(range, speed)
 
     def use_proximity_to_move_backward(self, range, speed):
-        self.go_backward_until_distance_is_greater_than(range, speed)
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(range, speed)
 
     def use_proximity_to_move_exact_range(self, range, delta, speed):
-        self.go_until_distance_is_within(delta, range, speed)
+        self.robot.drive_system.go_until_distance_is_within(delta, range, speed)
 
     #m3 Beep_Proximity
     def beep_proximity(self, initial, delta):
         self.go_forward_beeping
+
+    #m4 led_proximity
+    def m4_led_proximity(self,initial,delta,speed):
+        m4.m4_led_proximity(initial,delta,speed)
