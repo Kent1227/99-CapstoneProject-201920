@@ -224,9 +224,9 @@ class DriveSystem(object):
         ps = InfraredProximitySensor(4)
         while True:
             if ps.get_distance_in_inches() > inches+delta:
-                self.go_forward_until_distance_is_less_than(inches+delta,speed)
+                self.go_forward_until_distance_is_less_than(inches+delta, speed)
             elif ps.get_distance_in_inches() < inches+delta:
-                self.go_backward_until_distance_is_greater_than(inches-delta,speed)
+                self.go_backward_until_distance_is_greater_than(inches-delta, speed)
             else:
                 break
 
@@ -265,7 +265,7 @@ class DriveSystem(object):
         (if any).
         """
         b = self.sensor_system.camera.get_biggest_blob()
-        print("blob center: ",b.center.x)
+        print("blob center: ", b.center.x)
         print("blob width: ", b.width)
         print("blob height: ", b.height)
 
@@ -276,8 +276,8 @@ class DriveSystem(object):
         Requires that the user train the camera on the color of the object.
         """
         c = self.sensor_system.camera
-        self.go(speed,-speed)
-        while c.get_biggest_blob().get_area()<area:
+        self.go(speed, -speed)
+        while c.get_biggest_blob().get_area() < area:
             pass
         self.stop()
 
@@ -646,8 +646,8 @@ class InfraredProximitySensor(object):
         in inches, where about 39.37 inches (which is 100 cm) means no object
         is within its field of vision.
         """
-        #inches_per_cm = 2.54
-        #return 48 * inches_per_cm * self.get_distance() / 100
+        # inches_per_cm = 2.54
+        # return 48 * inches_per_cm * self.get_distance() / 100
 
         cm_per_inch = 2.54
         distance = (48 / cm_per_inch) * self.get_distance() / 100
