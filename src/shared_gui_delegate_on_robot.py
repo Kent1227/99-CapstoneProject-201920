@@ -8,7 +8,7 @@
 """
 
 import m4_extra as m4
-import m3_run_this_on_robot as m3
+import m3_extra as m3
 
 class DelegateThatReceives(object):
     def __init__(self, robot):

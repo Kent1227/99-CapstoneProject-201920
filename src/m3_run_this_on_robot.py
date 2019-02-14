@@ -16,7 +16,8 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    tests()
+    #tests()
+    real_thing()
 
 def real_thing():
     robot = rosebot.RoseBot()
@@ -26,29 +27,6 @@ def real_thing():
     while delegate.leave == False: #must end to quit
         time.sleep(0.01)
 
-
-def m3_beep_proximity(initial, delta, speed):
-    robot = rosebot.RoseBot()
-    ps = robot.sensor_system.ir_proximity_sensor
-    b = robot.sound_system
-    robot.drive_system.go(speed,speed)
-    while ps.get_distance_in_inches() > 4:
-        rate = initial + delta / ps.get_distance_in_inches()
-        b.beep_number_of_times(2)
-        time.sleep(rate)
-    robot.drive_system.stop()
-
-def m3_beep_retrieve(direction,speed):
-    robot = rosebot.RoseBot()
-    d=robot.drive_system
-    c= robot.sensor_system.camera
-    if direction == "CW":
-        d.spin_clockwise_until_sees_object(speed,200)
-    elif direction == "CCW":
-        d.spin_counterclockwise_until_sees_object(speed,200)
-    d.stop()
-    camera_aim()
-    m3_beep_proximity(1,0.1,speed)
 
 
 def m3_led_proximity(initial,delta,speed):
