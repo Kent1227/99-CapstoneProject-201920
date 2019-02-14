@@ -8,7 +8,7 @@
 import rosebot
 import mqtt_remote_method_calls as com
 import time
-
+import shared_gui_delegate_on_robot
 
 def main():
     """
@@ -26,7 +26,7 @@ def real_thing():
 
     while True:
         time.sleep(0.01)
-        if delegate.is_time_to_stop is True:
+        if delegate.leave:
             break
 
 

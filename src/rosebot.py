@@ -194,8 +194,8 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         """
         ps = InfraredProximitySensor(4)
-        self.go(speed,speed)
-        while ps.get_distance_in_inches() >= inches:
+        self.go(speed, speed)
+        while ps.get_distance_in_inches() >= int(inches):
             pass
         self.stop()
 

@@ -9,21 +9,18 @@ import time
 import shared_gui_delegate_on_robot
 
 
-def main():
+def go_forward_beeping(self, inital, delta):
     """
-    This code, which must run on the EV3 ROBOT:
-      1. Makes the EV3 robot to various things.
-      2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
+    Goes forward at the given speed until the robot is less than
+    the given number of inches from the nearest object that it senses.
     """
-    real_thing()
-
-def real_thing():
-    robot = rosebot.RoseBot()
-    delegate = shared_gui_delegate_on_robot.DelegateThatReceives(robot)
-    mqtt_reciever = com.MqttClient(delegate)
-    mqtt_reciever.connect_to_pc()
-
-
+    ps = InfraredProximitySensor(4)
+    wait_time = ps.get_distance()
+    self.go(20, 20)
+    while ps.get_distance_in_inches() >= int(1):
+        self.beep()
+        break
+    self.stop()
 
 
 # -----------------------------------------------------------------------------
