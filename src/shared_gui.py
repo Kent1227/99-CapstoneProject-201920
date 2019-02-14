@@ -323,7 +323,7 @@ def get_camera_frame(window, mqtt_sender):
     area_label.grid(row=1, column=1)
     area_entry.grid(row=1, column=2)
     ccw_button.grid(row=2, column=0)
-    data_button.grid(row=2, column=0)
+    data_button.grid(row=3, column=0)
     speed_label.grid(row=2, column=1)
     speed_entry.grid(row=2, column=2)
 
