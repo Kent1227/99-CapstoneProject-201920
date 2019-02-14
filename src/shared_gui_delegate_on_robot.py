@@ -73,11 +73,15 @@ class DelegateThatReceives(object):
         self.robot.sound_system.speak(given_phrase)
 
     # Proximity Sensor
-    def use_proximity_to_move_forward(self, range):
+    def use_proximity_to_move_forward(self, range, speed):
         self.go_forward_until_distance_is_less_than(range, speed)
 
-    def use_proximity_to_move_backward(self, range):
+    def use_proximity_to_move_backward(self, range, speed):
         self.go_backward_until_distance_is_greater_than(range, speed)
 
-    def use_proximity_to_move_exact_range(self, range, delta):
+    def use_proximity_to_move_exact_range(self, range, delta, speed):
         self.go_until_distance_is_within(delta, range, speed)
+
+    #m3 Beep_Proximity
+    def beep_proximity(self, initial, delta):
+        self.go_forward_beeping
