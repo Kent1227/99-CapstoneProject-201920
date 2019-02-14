@@ -206,7 +206,7 @@ class DriveSystem(object):
         Assumes that it senses an object when it starts.
         """
         ps = InfraredProximitySensor(4)
-        self.go(-speed, -speed)
+        self.go(-int(speed), -int(speed))
         while ps.get_distance_in_inches() <= inches:
             pass
         self.stop()
@@ -223,10 +223,10 @@ class DriveSystem(object):
         """
         ps = InfraredProximitySensor(4)
         while True:
-            if ps.get_distance_in_inches() > inches+delta:
-                self.go_forward_until_distance_is_less_than(inches+delta, speed)
-            elif ps.get_distance_in_inches() < inches+delta:
-                self.go_backward_until_distance_is_greater_than(inches-delta, speed)
+            if ps.get_distance_in_inches() > int(inches)+int(delta):
+                self.go_forward_until_distance_is_less_than(int(inches)+int(delta),int(speed))
+            elif ps.get_distance_in_inches() < int(inches)+int(delta):
+                self.go_backward_until_distance_is_greater_than(int(inches)-int(delta),int(speed))
             else:
                 break
 

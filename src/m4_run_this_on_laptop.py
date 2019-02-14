@@ -56,6 +56,8 @@ def main():
         initial_label = ttk.Label(frame, text="Initial Rate:")
         delta_entry = ttk.Entry(frame)
         delta_label = ttk.Label(frame, text="Change in Rate:")
+        speed_entry = ttk.Entry(frame)
+        speed_label = ttk.Label(frame, text="Speed:")
 
         frame_label.grid(row=0, column=1)
         start_button.grid(row=1, column=0)
@@ -63,8 +65,10 @@ def main():
         initial_entry.grid(row=1, column=2)
         delta_label.grid(row=2, column=1)
         delta_entry.grid(row=2, column=2)
+        speed_label.grid(row=3, column=1)
+        speed_entry.grid(row=3, column=2)
 
-        start_button["command"] = lambda: handle_m4_led_proximity(mqtt_sender, initial_entry, delta_entry)
+        start_button["command"] = lambda: handle_m4_led_proximity(mqtt_sender, initial_entry, delta_entry,speed_entry)
         return frame
 
     def get_m4_led_retrieve_frame(window, mqtt_sender):
@@ -129,15 +133,15 @@ def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,sound_frame,p
 # Handles for m4 features:
 # -----------------------------------------------------------------------------
 
-def handle_m4_led_proximity(mqtt_sender, entry_box, entry_box2):
+def handle_m4_led_proximity(mqtt_sender, entry_box, entry_box2,entry_box3):
     """
     Tells the robot to go pick up an object, flashing leds to indicate closeness.
       :type mqtt_sender: com.MqttClient
       :type entry_box: ttk.Entry
       :type entry_box2: ttk.Entry
     """
-    print("led_proximity",entry_box.get(), entry_box2.get())
-    mqtt_sender.send_message("led_proximity", [entry_box.get(), entry_box2.get()])
+    print("m_4led_proximity",entry_box.get(), entry_box2.get(),entry_box3.get())
+    mqtt_sender.send_message("m4_led_proximity", [entry_box.get(), entry_box2.get(),entry_box3.get()])
 
 def handle_m4_led_retrieve(mqtt_sender, entry_box, check):
     """
@@ -150,8 +154,8 @@ def handle_m4_led_retrieve(mqtt_sender, entry_box, check):
         dir = "CW"
     else:
         dir = "CCW"
-    print("led_retrieve",entry_box.get(), dir)
-    mqtt_sender.send_message("led_retrieve", [entry_box.get(), dir])
+    print("m4_led_retrieve", dir, entry_box.get())
+    mqtt_sender.send_message("m4_led_retrieve", [dir, entry_box.get()])
 
 
 # -----------------------------------------------------------------------------

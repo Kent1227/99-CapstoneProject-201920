@@ -182,7 +182,7 @@ def get_drive_system_frame(window, mqtt_sender):
     sp_label.grid(row=3, column=1)
 
     # Set the Button callbacks:
-    go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, sec_entry)
+    go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, sec_entry,sp_entry)
     go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, in_entry,sp_entry)
     go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, in_entry,sp_entry)
 
@@ -500,7 +500,7 @@ def handle_go_straight_seconds(mqtt_sender, entry_box,entry_box2):
       :type entry_box: ttk.Entry
     """
     print("go straight for seconds")
-    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), entry_box2.get])
+    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), entry_box2.get()])
 
 
 def handle_go_straight_inches_time(mqtt_sender, entry_box, entry_box2):

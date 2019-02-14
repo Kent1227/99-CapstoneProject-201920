@@ -21,7 +21,6 @@ def gui():
     mqtt_receiver.connect_to_pc()
     while receiver.leave == False: #must end to quit
         time.sleep(0.01)
-#test
 
 def tests():
     """

@@ -26,10 +26,10 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go(-int(lspeed), -int(rspeed))
 
     def left(self, lspeed, rspeed):
-        self.robot.drive_system.go(-int(lspeed), int(rspeed))
+        self.robot.drive_system.go(int(lspeed), -int(rspeed))
 
     def right(self, lspeed, rspeed):
-        self.robot.drive_system.go(int(lspeed), -int(rspeed))
+        self.robot.drive_system.go(-int(lspeed), int(rspeed))
 
     def stop(self):
         self.robot.drive_system.stop()
@@ -59,7 +59,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_for_seconds(seconds, speed)
 
     def go_straight_for_inches_using_time(self, inches, speed):
-        self.robot.drive_system.go_straight_for_inches_using_time(inches, speed)
+        self.robot.drive_system.go_straight_for_inches_using_time(int(inches), int(speed))
 
     def go_straight_for_inches_using_encoder(self, inches, speed):
         self.robot.drive_system.go_straight_for_inches_using_encoder(inches, speed)
@@ -80,7 +80,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_forward_until_distance_is_less_than(range, speed)
 
     def use_proximity_to_move_backward(self, range, speed):
-        self.robot.drive_system.go_backward_until_distance_is_greater_than(range, speed)
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(int(range), int(speed))
 
     def use_proximity_to_move_exact_range(self, range, delta, speed):
         self.robot.drive_system.go_until_distance_is_within(delta, range, speed)
@@ -99,12 +99,10 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_until_color_is_not(color, speed)
 
     # Camera
-    def camera_cw(self, area, speed):
-        self.robot.drive_system.spin_clockwise_until_sees_object(speed, area)
-
-    def camera_ccw(self, area, speed):
-        self.robot.drive_system.spin_counterclockwise_until_sees_object(speed, area)
-
+    def camera_cw(self,area,speed):
+        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
+    def camera_ccw(self,area,speed):
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed),int(area))
     def camera_data(self):
         self.robot.drive_system.display_camera_data()
 
@@ -112,6 +110,9 @@ class DelegateThatReceives(object):
     def m3_beep_proximity(self, initial, delta, speed):
         m3.m3_beep_proximity(initial, delta, speed)
 
-    # m4 led_proximity
+    # m4
     def m4_led_proximity(self, initial, delta, speed):
-        m4.m4_led_proximity(initial, delta, speed)
+        m4.m4_led_proximity(int(initial), float(delta), int(speed))
+
+    def m4_led_retrieve(self, dir, speed):
+        m4.m4_led_retrieve(dir, speed)
