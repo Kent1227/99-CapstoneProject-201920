@@ -159,9 +159,9 @@ def get_drive_system_frame(window, mqtt_sender):
 
     # Construct the widgets on the frame:
     frame_label = ttk.Label(frame, text="Drive System")
-    go_straight_for_seconds_button = ttk.Button(frame, text="Go straight for seconds")
-    go_straight_for_inches_time_button = ttk.Button(frame, text="Go straight for inches using time")
-    go_straight_for_inches_encoder_button = ttk.Button(frame, text="Go straight for inches using encoder")
+    go_straight_for_seconds_button = ttk.Button(frame, text="Drive using seconds")
+    go_straight_for_inches_time_button = ttk.Button(frame, text="Drive using time")
+    go_straight_for_inches_encoder_button = ttk.Button(frame, text="Drive using encoder")
     in_entry = ttk.Entry(frame)
     in_label = ttk.Label(frame, text="Inches:")
     sec_entry = ttk.Entry(frame)
