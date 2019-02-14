@@ -91,59 +91,14 @@ def main():
         start_button["command"] = lambda: handle_m3_beep_retrieve(mqtt_sender, speed_entry, state)
         return frame
 
-    def get_m3_led_proximity_frame(window, mqtt_sender):
-        frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
-        frame.grid()
-
-        frame_label = ttk.Label(frame, text="LED_Proximity")
-        start_button = ttk.Button(frame, text="Start LED_Proximity")
-        initial_entry = ttk.Entry(frame)
-        initial_label = ttk.Label(frame, text="Initial Rate:")
-        delta_entry = ttk.Entry(frame)
-        delta_label = ttk.Label(frame, text="Change in Rate:")
-
-        frame_label.grid(row=0, column=1)
-        start_button.grid(row=1, column=0)
-        initial_label.grid(row=1, column=1)
-        initial_entry.grid(row=1, column=2)
-        delta_label.grid(row=2, column=1)
-        delta_entry.grid(row=2, column=2)
-
-        start_button["command"] = lambda: handle_m3_led_proximity(mqtt_sender, initial_entry, delta_entry)
-        return frame
-
-    def get_m3_led_retrieve_frame(window, mqtt_sender):
-        frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
-        frame.grid()
-
-        frame_label = ttk.Label(frame, text="LED_Retrieve")
-        start_button = ttk.Button(frame, text="Start LED_Retrieve")
-        speed_entry = ttk.Entry(frame)
-        speed_label = ttk.Label(frame, text="Speed:")
-        state=tkinter.IntVar()
-        direction_check = ttk.Checkbutton(frame,variable=state)
-        direction_label = ttk.Label(frame,text="Clockwise?")
-
-        frame_label.grid(row=0, column=1)
-        start_button.grid(row=1, column=0)
-        speed_label.grid(row=1, column=1)
-        speed_entry.grid(row=1, column=2)
-        direction_label.grid(row=2, column=1)
-        direction_check.grid(row=2, column=2)
-
-        start_button["command"] = lambda: handle_m3_led_retrieve(mqtt_sender, speed_entry, state)
-        return frame
-
     beep_proximity_frame = get_m3_beep_proximity_frame(main_frame, mqtt_sender)
     beep_retrieve_frame = get_m3_beep_retrieve_frame(main_frame, mqtt_sender)
-    led_proximity_frame = get_m3_led_proximity_frame(main_frame, mqtt_sender)
-    led_retrieve_frame = get_m3_led_retrieve_frame(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
     grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame,
-                proximity_frame, beep_proximity_frame, beep_retrieve_frame, color_frame, camera_frame, led_proximity_frame, led_retrieve_frame)
+                proximity_frame, beep_proximity_frame, beep_retrieve_frame, color_frame, camera_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -167,8 +122,7 @@ def get_shared_frames(main_frame, mqtt_sender):
 
 def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,
                 sound_frame, proximity_frame, beep_proximity_frame,
-                beep_retrieve_frame, color_frame, camera_frame,
-                led_proximity_frame,led_retrieve_frame):
+                beep_retrieve_frame, color_frame, camera_frame):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
@@ -179,8 +133,6 @@ def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,
     beep_retrieve_frame.grid(row=2, column=1)
     color_frame.grid(row=3, column=1)
     camera_frame.grid(row=4, column=1)
-    led_proximity_frame.grid(row=2, column=2)
-    led_retrieve_frame.grid(row=3, column=2)
 
 def handle_m3_beep_proximity(mqtt_sender, entry_box1, entry_box2):
     """
@@ -209,29 +161,6 @@ def handle_m3_beep_retrieve(mqtt_sender, entry_box, check):
     print("beep_retrieve",entry_box.get(), dir)
     mqtt_sender.send_message("beep_retrieve", [entry_box.get(), dir])
 
-def handle_m3_led_proximity(mqtt_sender, entry_box, entry_box2):
-    """
-    Tells the robot to go pick up an object, flashing leds to indicate closeness.
-      :type mqtt_sender: com.MqttClient
-      :type entry_box: ttk.Entry
-      :type entry_box2: ttk.Entry
-    """
-    print("led_proximity",entry_box.get(), entry_box2.get())
-    mqtt_sender.send_message("led_proximity", [entry_box.get(), entry_box2.get()])
-
-def handle_m3_led_retrieve(mqtt_sender, entry_box, check):
-    """
-    Tells the robot to find and then pick up an object, flashing leds to indicate closeness.
-      :type mqtt_sender: com.MqttClient
-      :type entry_box: ttk.Entry
-      :type entry_box2: ttk.Entry
-    """
-    if check.get()==1:
-        dir = "CW"
-    else:
-        dir = "CCW"
-    print("led_retrieve",entry_box.get(), dir)
-    mqtt_sender.send_message("led_retrieve", [entry_box.get(), dir])
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
