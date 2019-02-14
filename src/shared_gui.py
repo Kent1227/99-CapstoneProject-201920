@@ -311,7 +311,7 @@ def get_camera_frame(window, mqtt_sender):
 
     frame_label = ttk.Label(frame, text="Camera")
     cw_button = ttk.Button(frame, text="Spin Clockwise until Object Found")
-    ccw_button = ttk.Button(frame, text="Spin Clockwise until Object Found")
+    ccw_button = ttk.Button(frame, text="Spin Counterclockwise until Object Found")
     data_button = ttk.Button(frame, text="Camera Data")
     area_entry = ttk.Entry(frame)
     area_label = ttk.Label(frame, text="Object Area:")

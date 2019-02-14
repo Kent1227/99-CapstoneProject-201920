@@ -150,10 +150,10 @@ def handle_m4_led_retrieve(mqtt_sender, entry_box, check):
       :type entry_box: ttk.Entry
       :type entry_box2: ttk.Entry
     """
-    if check.get()==1:
-        dir = "CW"
-    else:
+    if check.get()==0:
         dir = "CCW"
+    else:
+        dir = "CW"
     print("m4_led_retrieve", dir, entry_box.get())
     mqtt_sender.send_message("m4_led_retrieve", [dir, entry_box.get()])
 
