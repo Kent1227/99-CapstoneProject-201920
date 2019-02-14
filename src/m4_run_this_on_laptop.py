@@ -102,6 +102,7 @@ def main():
     # -------------------------------------------------------------------------
     root.mainloop()
 
+
 def get_shared_frames(main_frame, mqtt_sender):
     teleop_frame = shared_gui.get_teleoperation_frame(main_frame,mqtt_sender)
     arm_frame = shared_gui.get_arm_frame(main_frame,mqtt_sender)
@@ -111,6 +112,7 @@ def get_shared_frames(main_frame, mqtt_sender):
     proximity_frame = shared_gui.get_proximity_frame(main_frame,mqtt_sender)
     beep_proximity_frame = shared_gui.get_m3_beep_proximity_frame(main_frame,mqtt_sender)
     return teleop_frame,arm_frame,control_frame,drive_frame,sound_frame,proximity_frame,beep_proximity_frame
+
 
 def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,sound_frame,proximity_frame,led_proximity_frame,led_retrieve_frame):
     teleop_frame.grid(row=0,column=0)
