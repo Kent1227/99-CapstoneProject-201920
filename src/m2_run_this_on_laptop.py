@@ -45,8 +45,8 @@ def main():
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
-    # TODO: Implement and call get_my_frames(...)
-
+    # DONE: Implement and call get_my_frames(...)
+    get_new_frame(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
@@ -65,7 +65,6 @@ def get_shared_frames(main_frame, mqtt_sender):
     drive_frame = shared_gui.get_drive_system_frame(main_frame, mqtt_sender)
     sound_frame = shared_gui.get_sound_frame(main_frame, mqtt_sender)
     proximity_frame = shared_gui.get_proximity_frame(main_frame, mqtt_sender)
-
     return teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame
 
 
@@ -76,6 +75,24 @@ def grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame
     drive_frame.grid(row=3, column=0)
     sound_frame.grid(row=4, column=0)
     proximity_frame.grid(row=5, column=0)
+
+
+def get_new_frame(main_frame, mqtt_sender):
+    find_homework = ttk.Button(main_frame, text="Find Math Homework")
+    find_homework.grid()
+    find_homework['command'] = lambda: print("Finding Math Homework")
+
+    find_games = ttk.Button(main_frame, text="Find Video Games")
+    find_games.grid()
+    find_games['command'] = lambda: print("Finding Video Games")
+
+    find_food = ttk.Button(main_frame, text="Find Food")
+    find_food.grid()
+    find_food['command'] = lambda: print("Finding Food")
+
+    go_to_sleep = ttk.Button(main_frame, text="Go to Sleep")
+    go_to_sleep.grid()
+    go_to_sleep['command'] = lambda: print("Going to Sleep")
 
 
 # -----------------------------------------------------------------------------
