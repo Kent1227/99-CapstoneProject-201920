@@ -333,6 +333,29 @@ def get_camera_frame(window, mqtt_sender):
 
     return frame
 
+def get_m3_beep_proximity_frame(window, mqtt_sender):
+
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Beep Proximity")
+    begin_button = ttk.Button(frame, text="Begin Beep_Proximity")
+    initial_entry = ttk.Entry(frame)
+    delta_entry = ttk.Entry(frame)
+    initial_label = ttk.Label(frame, text="Range:")
+    delta_label = ttk.Label(frame, text="Delta:")
+
+    frame_label.grid(row=0, column=1)
+    begin_button.grid(row=1, column=0)
+    initial_label.grid(row=1, column=1)
+    initial_entry.grid(row=1, column=2)
+    delta_label.grid(row=2, column=1)
+    delta_entry.grid(row=2, column=2)
+
+    begin_button["command"] = lambda: handle_m3_proximity(
+        mqtt_sender, initial_entry, delta_entry)
+    return frame
+
 ###############################################################################
 ###############################################################################
 # The following specifies, for each Button,
