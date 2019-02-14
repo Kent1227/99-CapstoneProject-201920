@@ -162,19 +162,25 @@ def get_drive_system_frame(window, mqtt_sender):
     go_straight_for_seconds_button = ttk.Button(frame, text="Go straight for seconds")
     go_straight_for_inches_time_button = ttk.Button(frame, text="Go straight for inches using time")
     go_straight_for_inches_encoder_button = ttk.Button(frame, text="Go straight for inches using encoder")
-    entry = ttk.Entry(frame, width=8)
+    in_entry = ttk.Entry(frame)
+    in_label = ttk.Label(frame, text="Inches:")
+    sec_entry = ttk.Entry(frame)
+    sec_label = ttk.Label(frame, text="Seconds:")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
-    go_straight_for_seconds_button.grid(row=2, column=0)
-    go_straight_for_inches_time_button.grid(row=2, column=1)
-    go_straight_for_inches_encoder_button.grid(row=2, column=2)
-    entry.grid(row=1, column=1)
+    go_straight_for_seconds_button.grid(row=1, column=0)
+    go_straight_for_inches_time_button.grid(row=2, column=0)
+    go_straight_for_inches_encoder_button.grid(row=3, column=0)
+    sec_entry.grid(row=1, column=2)
+    sec_label.grid(row=1, column=1)
+    in_entry.grid(row=2, column=2)
+    in_label.grid(row=2, column=1)
 
     # Set the Button callbacks:
-    go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, entry)
-    go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, entry)
-    go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, entry)
+    go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, sec_entry)
+    go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, in_entry)
+    go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, in_entry)
 
     return frame
 
@@ -224,11 +230,11 @@ def get_sound_frame(window, mqtt_sender):
 
 def get_proximity_frame(window, mqtt_sender):
 
-    #range
-    #delta
-    #button_drive_forward_until_in_range
-    #button_drive_backward_until_out_of_range
-    #button_drive_until_within_range_+_or_-_delta
+    # range
+    # delta
+    # button_drive_forward_until_in_range
+    # button_drive_backward_until_out_of_range
+    # button_drive_until_within_range_+_or_-_delta
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
 
@@ -253,7 +259,6 @@ def get_proximity_frame(window, mqtt_sender):
     range_button.grid(row=3, column=0)
     speed_label.grid(row=3, column=1)
     speed_entry.grid(row=3, column=2)
-
 
     forward_button["command"] = lambda: handle_proximity_forward(mqtt_sender, range_entry, speed_entry)
     backward_button["command"] = lambda: handle_proximity_backward(mqtt_sender, range_entry, speed_entry)
@@ -490,7 +495,8 @@ def handle_proximity_forward(mqtt_sender, entry_box1, entry_box2):
     """
     Tells the robot to go forward until within range using proximity sensor.
       :type mqtt_sender: com.MqttClient
-      :type entry_box: ttk.Entry
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
     """
     print("use_proximity_to_move_forward")
     mqtt_sender.send_message("use_proximity_to_move_forward",
@@ -501,31 +507,35 @@ def handle_proximity_backward(mqtt_sender, entry_box1, entry_box2):
     """
    Tells the robot to go backward until out of range using proximity sensor.
       :type mqtt_sender: com.MqttClient
-      :type entry_box: ttk.Entry
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
     """
     print("use_proximity_to_move_backward")
     mqtt_sender.send_message("use_proximity_to_move_backward",
-                             [entry_box1.get(),entry_box2.get()])
+                             [entry_box1.get(), entry_box2.get()])
 
 
 def handle_proximity_range(mqtt_sender, entry_box1, entry_box2, entry_box3):
     """
      Tells the robot to go an exact range +/- the delta using proximity sensor.
        :type mqtt_sender: com.MqttClient
-       :type entry_box: ttk.Entry
+       :type entry_box1: ttk.Entry
        :type entry_box2: ttk.Entry
+       :type entry_box3: ttk.Entry
      """
     print("use_proximity_to_move_exact_range")
     mqtt_sender.send_message("use_proximity_to_move_exact_range",
-                             [entry_box1.get(),entry_box2.get(), entry_box3.get()])
+                             [entry_box1.get(), entry_box2.get(), entry_box3.get()])
 
-#m3
+# m3
+
+
 def handle_m3_proximity(mqtt_sender, entry_box1, entry_box2):
     """
      Tells the robot to go pick up an object,
       beeping increasingly faster as it nears the object.
        :type mqtt_sender: com.MqttClient
-       :type entry_box: ttk.Entry
+       :type entry_box1: ttk.Entry
        :type entry_box2: ttk.Entry
      """
     print("beep_proximity")
