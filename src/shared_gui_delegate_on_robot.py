@@ -84,6 +84,24 @@ class DelegateThatReceives(object):
     def use_proximity_to_move_exact_range(self, range, delta, speed):
         self.robot.drive_system.go_until_distance_is_within(delta, range, speed)
 
+    # Color Sensor
+    def intensity_greater(self,intensity,speed):
+        self.robot.drive_system.go_straight_until_intensity_is_greater_than(intensity,speed)
+    def intensity_lesser(self,intensity,speed):
+        self.robot.drive_system.go_straight_until_intensity_is_less_than(intensity,speed)
+    def color_is(self,color,speed):
+        self.robot.drive_system.go_straight_until_color_is(color,speed)
+    def color_not(self, color, speed):
+        self.robot.drive_system.go_straight_until_color_is_not(color, speed)
+
+    # Camera
+    def camera_cw(self,area,speed):
+        self.robot.drive_system.spin_clockwise_until_sees_object(speed,area)
+    def camera_ccw(self,area,speed):
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(speed,area)
+    def camera_data(self):
+        self.robot.drive_system.display_camera_data()
+
     # m3 Beep_Proximity
     def m3_beep_proximity(self, initial, delta, speed):
         m3.m3_beep_proximity(initial, delta, speed)

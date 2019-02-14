@@ -166,6 +166,8 @@ def get_drive_system_frame(window, mqtt_sender):
     in_label = ttk.Label(frame, text="Inches:")
     sec_entry = ttk.Entry(frame)
     sec_label = ttk.Label(frame, text="Seconds:")
+    sp_entry = ttk.Entry(frame)
+    sp_label = ttk.Label(frame, text="Speed:")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
@@ -176,11 +178,13 @@ def get_drive_system_frame(window, mqtt_sender):
     sec_label.grid(row=1, column=1)
     in_entry.grid(row=2, column=2)
     in_label.grid(row=2, column=1)
+    sp_entry.grid(row=3, column=2)
+    sp_label.grid(row=3, column=1)
 
     # Set the Button callbacks:
     go_straight_for_seconds_button["command"] = lambda: handle_go_straight_seconds(mqtt_sender, sec_entry)
-    go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, in_entry)
-    go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, in_entry)
+    go_straight_for_inches_time_button["command"] = lambda: handle_go_straight_inches_time(mqtt_sender, in_entry,sp_entry)
+    go_straight_for_inches_encoder_button["command"] = lambda: handle_go_straight_inches_encoder(mqtt_sender, in_entry,sp_entry)
 
     return frame
 
@@ -264,6 +268,92 @@ def get_proximity_frame(window, mqtt_sender):
     backward_button["command"] = lambda: handle_proximity_backward(mqtt_sender, range_entry, speed_entry)
     range_button["command"] = lambda: handle_proximity_range(mqtt_sender, range_entry, delta_entry, speed_entry)
 
+    return frame
+
+def get_color_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Color Sensor")
+    int_greater_button = ttk.Button(frame, text="Drive Forward until Intensity is Greater Than:")
+    int_lesser_button = ttk.Button(frame, text="Drive Backward until Intensity is Less Than:")
+    col_is_button = ttk.Button(frame, text="Drive until Color Is:")
+    col_not_button = ttk.Button(frame, text="Drive until Color is Not:")
+    intensity_entry = ttk.Entry(frame)
+    color_entry = ttk.Entry(frame)
+    intensity_label = ttk.Label(frame, text="Intensity:")
+    color_label = ttk.Label(frame, text="Color:")
+    speed_entry = ttk.Entry(frame)
+    speed_label = ttk.Label(frame, text="Speed:")
+
+    frame_label.grid(row=0, column=1)
+    int_greater_button.grid(row=1, column=0)
+    intensity_label.grid(row=1, column=1)
+    intensity_entry.grid(row=1, column=2)
+    int_lesser_button.grid(row=2, column=0)
+    color_label.grid(row=2, column=1)
+    color_entry.grid(row=2, column=2)
+    col_is_button.grid(row=3, column=0)
+    col_not_button.grid(row=4, column=0)
+    speed_label.grid(row=3, column=1)
+    speed_entry.grid(row=3, column=2)
+
+    int_greater_button["command"] = lambda: handle_intensity_greater(mqtt_sender, intensity_entry, speed_entry)
+    int_lesser_button["command"] = lambda: handle_intensity_lesser(mqtt_sender, intensity_entry, speed_entry)
+    col_is_button["command"] = lambda: handle_color_is(mqtt_sender, color_entry, speed_entry)
+    col_not_button["command"] = lambda: handle_color_not(mqtt_sender, color_entry, speed_entry)
+
+    return frame
+
+def get_camera_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Camera")
+    cw_button = ttk.Button(frame, text="Spin Clockwise until Object Found")
+    ccw_button = ttk.Button(frame, text="Spin Clockwise until Object Found")
+    data_button = ttk.Button(frame, text="Camera Data")
+    area_entry = ttk.Entry(frame)
+    area_label = ttk.Label(frame, text="Object Area:")
+    speed_entry = ttk.Entry(frame)
+    speed_label = ttk.Label(frame, text="Speed:")
+
+    frame_label.grid(row=0, column=1)
+    cw_button.grid(row=1, column=0)
+    area_label.grid(row=1, column=1)
+    area_entry.grid(row=1, column=2)
+    ccw_button.grid(row=2, column=0)
+    data_button.grid(row=2, column=0)
+    speed_label.grid(row=2, column=1)
+    speed_entry.grid(row=2, column=2)
+
+    cw_button["command"] = lambda: handle_camera_cw(mqtt_sender, area_entry, speed_entry)
+    ccw_button["command"] = lambda: handle_camera_ccw(mqtt_sender, area_entry, speed_entry)
+    data_button["command"] = lambda: handle_camera_data(mqtt_sender)
+
+    return frame
+
+def get_m3_beep_proximity_frame(window, mqtt_sender):
+
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Beep Proximity")
+    begin_button = ttk.Button(frame, text="Begin Beep_Proximity")
+    initial_entry = ttk.Entry(frame)
+    delta_entry = ttk.Entry(frame)
+    initial_label = ttk.Label(frame, text="Range:")
+    delta_label = ttk.Label(frame, text="Delta:")
+
+    frame_label.grid(row=0, column=1)
+    begin_button.grid(row=1, column=0)
+    initial_label.grid(row=1, column=1)
+    initial_entry.grid(row=1, column=2)
+    delta_label.grid(row=2, column=1)
+    delta_entry.grid(row=2, column=2)
+
+    begin_button["command"] = lambda: handle_m3_proximity(
+        mqtt_sender, initial_entry, delta_entry)
     return frame
 
 ###############################################################################
@@ -403,34 +493,34 @@ def handle_exit(mqtt_sender):
 ###############################################################################
 # Handlers for Buttons in the Drive System frame.
 ###############################################################################
-def handle_go_straight_seconds(mqtt_sender, entry_box):
+def handle_go_straight_seconds(mqtt_sender, entry_box,entry_box2):
     """
     Tells the robot to go straight for a given amount of seconds
       :type mqtt_sender: com.MqttClient
       :type entry_box: ttk.Entry
     """
     print("go straight for seconds")
-    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), 100])
+    mqtt_sender.send_message("go_straight_for_seconds", [entry_box.get(), entry_box2.get])
 
 
-def handle_go_straight_inches_time(mqtt_sender, entry_box):
+def handle_go_straight_inches_time(mqtt_sender, entry_box, entry_box2):
     """
     Tells the robot to go straight for a given amount of time
       :type mqtt_sender: com.MqttClient
       :type entry_box: ttk.Entry
     """
     print("go straight for inches using time")
-    mqtt_sender.send_message("go_straight_for_inches_using_time", [entry_box.get(), 100])
+    mqtt_sender.send_message("go_straight_for_inches_using_time", [entry_box.get(), entry_box2.get()])
 
 
-def handle_go_straight_inches_encoder(mqtt_sender, entry_box):
+def handle_go_straight_inches_encoder(mqtt_sender, entry_box,entry_box2):
     """
     Tells the robot to go straight for a given amount of time
       :type mqtt_sender: com.MqttClient
       :type entry_box: ttk.Entry
     """
     print("go straight for inches using encoder")
-    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get(), 100])
+    mqtt_sender.send_message("go_straight_for_inches_using_encoder", [entry_box.get(), entry_box2.get()])
 
 
 ###############################################################################
@@ -466,6 +556,9 @@ def handle_speak(mqtt_sender, entry_box):
     print("speak")
     mqtt_sender.send_message("speak", [entry_box.get()])
 
+###############################################################################
+# Handlers for Buttons in the Proximity frame.
+###############################################################################
 
 def handle_proximity_forward(mqtt_sender, entry_box1, entry_box2):
     """
@@ -503,4 +596,83 @@ def handle_proximity_range(mqtt_sender, entry_box1, entry_box2, entry_box3):
     mqtt_sender.send_message("use_proximity_to_move_exact_range",
                              [entry_box1.get(), entry_box2.get(), entry_box3.get()])
 
+###############################################################################
+# Handlers for Buttons in the Color frame.
+###############################################################################
+
+def handle_intensity_greater(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to go until the reflected light intensity is greater than the given value.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("intensity_greater")
+    mqtt_sender.send_message("intensity_greater",[entry_box1.get(), entry_box2.get()])
+
+def handle_intensity_lesser(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to go until the reflected light intensity is less than the given value.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("intensity_lesser")
+    mqtt_sender.send_message("intensity_lesser",[entry_box1.get(), entry_box2.get()])
+
+def handle_color_is(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to go until the ground is the given color.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("color_is")
+    mqtt_sender.send_message("color_is",[entry_box1.get(), entry_box2.get()])
+
+def handle_color_not(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to go until the ground is not the given color.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("color_not")
+    mqtt_sender.send_message("color_not",[entry_box1.get(), entry_box2.get()])
+
+###############################################################################
+# Handlers for Buttons in the Camera frame.
+###############################################################################
+
+def handle_camera_cw(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to spin clockwise until an object larger than the given area is found.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("camera_cw")
+    mqtt_sender.send_message("camera_cw",[entry_box1.get(), entry_box2.get()])
+
+def handle_camera_ccw(mqtt_sender, entry_box1, entry_box2):
+    """
+   Tells the robot to spin counterclockwise until an object larger than the given area is found.
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("camera_ccw")
+    mqtt_sender.send_message("camera_ccw",[entry_box1.get(), entry_box2.get()])
+
+def handle_camera_data(mqtt_sender):
+    """
+   Retrieves data about the object the camera sees
+      :type mqtt_sender: com.MqttClient
+      :type entry_box1: ttk.Entry
+      :type entry_box2: ttk.Entry
+    """
+    print("camera_data")
+    mqtt_sender.send_message("camera_data",[])
+
+# m3
 

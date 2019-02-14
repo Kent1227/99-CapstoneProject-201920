@@ -40,7 +40,7 @@ def main():
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame, beep_proximity_frame = get_shared_frames(main_frame, mqtt_sender)
+    teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame, color_frame,camera_frame = get_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -95,13 +95,12 @@ def main():
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame, led_proximity_frame, led_retrieve_frame)
+    grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame, led_proximity_frame, led_retrieve_frame, color_frame,camera_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
     root.mainloop()
-
 
 def get_shared_frames(main_frame, mqtt_sender):
     teleop_frame = shared_gui.get_teleoperation_frame(main_frame,mqtt_sender)
@@ -110,19 +109,21 @@ def get_shared_frames(main_frame, mqtt_sender):
     drive_frame = shared_gui.get_drive_system_frame(main_frame, mqtt_sender)
     sound_frame = shared_gui.get_sound_frame(main_frame,mqtt_sender)
     proximity_frame = shared_gui.get_proximity_frame(main_frame,mqtt_sender)
-    beep_proximity_frame = shared_gui.get_m3_beep_proximity_frame(main_frame,mqtt_sender)
-    return teleop_frame,arm_frame,control_frame,drive_frame,sound_frame,proximity_frame,beep_proximity_frame
+    color_frame = shared_gui.get_color_frame(main_frame,mqtt_sender)
+    camera_frame = shared_gui.get_camera_frame(main_frame,mqtt_sender)
+    return teleop_frame,arm_frame,control_frame,drive_frame,sound_frame,proximity_frame,color_frame,camera_frame
 
-
-def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,sound_frame,proximity_frame,led_proximity_frame,led_retrieve_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,sound_frame,proximity_frame,led_proximity_frame,led_retrieve_frame,color_frame,camera_frame):
     teleop_frame.grid(row=0,column=0)
     arm_frame.grid(row=1, column=0)
     control_frame.grid(row=2, column=0)
     sound_frame.grid(row=3, column=0)
     drive_frame.grid(row=0, column=1)
     proximity_frame.grid(row=1, column=1)
-    led_proximity_frame.grid(row=2, column=1)
-    led_retrieve_frame.grid(row=3, column=1)
+    led_proximity_frame.grid(row=1, column=2)
+    led_retrieve_frame.grid(row=2, column=2)
+    color_frame.grid(row=2, column=1)
+    camera_frame.grid(row=3,column=1)
 
 # -----------------------------------------------------------------------------
 # Handles for m4 features:
