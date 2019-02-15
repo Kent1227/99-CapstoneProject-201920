@@ -1,4 +1,44 @@
+#
 #This is the beginning of Eddie's Extra file for the Final Project
 #The idea behind this design is to make an accurate representation of a Rose-Hulman Student
+#
 
-def find_homework()
+
+import rosebot
+
+# Not sure which find homework will work better, if they work at all
+# The one below uses the object mode
+
+
+def find_homework():
+    robot = rosebot.RoseBot()
+    robot.drive_system.spin_clockwise_until_sees_object(50, 93)
+    robot.drive_system.go_forward_until_distance_is_less_than(5, 100)
+    robot.drive_system.stop()
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.go_forward_until_distance_is_less_than(3, 100)
+    robot.arm_and_claw.lower_arm()
+    robot.drive_system.go_straight_for_inches_using_encoder(4, 50)
+    robot.drive_system.stop()
+    robot.sound_system.speak("DEATH TO ALL HOMEWORK!")
+
+# The one below uses the color mode
+
+
+def find_homework2():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_forward_until_distance_is_less_than(5, 100)
+    robot.drive_system.stop()
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.go_forward_until_distance_is_less_than(3, 100)
+    robot.arm_and_claw.lower_arm()
+    robot.drive_system.go_straight_for_inches_using_encoder(4, 50)
+    robot.drive_system.stop()
+    robot.sound_system.speak("DEATH TO ALL HOMEWORK!")
+
+# Same situation and the find homework functions
+
+
+def find_games():
+    robot = rosebot.RoseBot()
+    robot.drive_system.spin_clockwise_until_sees_object(50, 1)

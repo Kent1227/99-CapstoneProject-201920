@@ -294,6 +294,13 @@ class DriveSystem(object):
             pass
         self.stop()
 
+    def spin_clockwise_until_sees_color(self, speed, color):
+        c = self.sensor_system.color_sensor.COLORS
+        if c == color:
+            self.go(speed, speed)
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() == 3:
+                self.stop()
+
 
 ###############################################################################
 #    ArmAndClaw
