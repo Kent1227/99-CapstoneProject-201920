@@ -155,9 +155,9 @@ def handle_m3_beep_retrieve(mqtt_sender, entry_box, check):
       :type entry_box2: ttk.Entry
     """
     if check.get()==1:
-        dir = "CW"
+        dir = "Clockwise"
     else:
-        dir = "CCW"
+        dir = "Counter_Clockwise"
     print("beep_retrieve",entry_box.get(), dir)
     mqtt_sender.send_message("beep_retrieve", [entry_box.get(), dir])
 

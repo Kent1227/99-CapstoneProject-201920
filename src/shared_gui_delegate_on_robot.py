@@ -110,6 +110,9 @@ class DelegateThatReceives(object):
     def m3_beep_proximity(self, initial, delta, speed):
         m3.m3_beep_proximity(initial, delta, speed)
 
+    def m3_beep_retrieve(self, dir, speed):
+        m3.m3_beep_retrieve(dir, speed)
+
     # m4
     def m4_led_proximity(self, initial, delta, speed):
         m4.m4_led_proximity(int(initial), float(delta), int(speed))
