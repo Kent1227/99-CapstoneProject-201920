@@ -277,7 +277,7 @@ class DriveSystem(object):
         Requires that the user train the camera on the color of the object.
         """
         c = self.sensor_system.camera
-        self.go(-speed, speed)
+        self.go(-int(speed), int(speed))
         while c.get_biggest_blob().get_area() < area:
             pass
         self.stop()

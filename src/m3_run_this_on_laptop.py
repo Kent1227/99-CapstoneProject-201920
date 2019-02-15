@@ -57,6 +57,8 @@ def main():
         delta_entry = ttk.Entry(frame)
         initial_label = ttk.Label(frame, text="Initial:")
         delta_label = ttk.Label(frame, text="Delta:")
+        speed_label = ttk.Label(frame, text="Speed:")
+        speed_entry = ttk.Entry(frame)
 
         frame_label.grid(row=0, column=1)
         begin_button.grid(row=1, column=0)
@@ -64,9 +66,11 @@ def main():
         initial_entry.grid(row=1, column=2)
         delta_label.grid(row=2, column=1)
         delta_entry.grid(row=2, column=2)
+        speed_label.grid(row=3, column=1)
+        speed_entry.grid(row=3, column=2)
 
         begin_button["command"] = lambda: handle_m3_beep_proximity(
-            mqtt_sender, initial_entry, delta_entry)
+            mqtt_sender, initial_entry, delta_entry, speed_entry)
         return frame
 
     def get_m3_beep_retrieve_frame(window, mqtt_sender):
@@ -134,17 +138,20 @@ def grid_frames(teleop_frame, arm_frame, control_frame,drive_frame,
     color_frame.grid(row=3, column=1)
     camera_frame.grid(row=4, column=1)
 
-def handle_m3_beep_proximity(mqtt_sender, entry_box1, entry_box2):
+
+def handle_m3_beep_proximity(mqtt_sender, entry_box1, entry_box2, entry_box3):
     """
      Tells the robot to go pick up an object,
       beeping increasingly faster as it nears the object.
        :type mqtt_sender: com.MqttClient
        :type entry_box1: ttk.Entry
        :type entry_box2: ttk.Entry
+       :type entry_box: ttk.Entry
      """
-    print("beep_proximity")
-    mqtt_sender.send_message("beep_proximity",
-                             [entry_box1.get(), entry_box2.get()])
+    print("m3_beep_proximity")
+    mqtt_sender.send_message("m3_beep_proximity",
+                             [entry_box1.get(), entry_box2.get(), entry_box3.get()])
+
 
 def handle_m3_beep_retrieve(mqtt_sender, entry_box, check):
     """
@@ -155,11 +162,11 @@ def handle_m3_beep_retrieve(mqtt_sender, entry_box, check):
       :type entry_box2: ttk.Entry
     """
     if check.get()==1:
-        dir = "Clockwise"
+        dir = "CW"
     else:
-        dir = "Counter_Clockwise"
-    print("beep_retrieve",entry_box.get(), dir)
-    mqtt_sender.send_message("beep_retrieve", [entry_box.get(), dir])
+        dir = "CCW"
+    print("m3_beep_retrieve",dir, entry_box.get())
+    mqtt_sender.send_message("m3_beep_retrieve", [dir, entry_box.get()])
 
 
 # -----------------------------------------------------------------------------
