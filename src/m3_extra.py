@@ -49,3 +49,27 @@ def camera_aim():
         d.stop()
         if 160 < c.get_biggest_blob().center.x < 170:
             break
+
+
+def m3_baby_walk(speed):
+    robot = rosebot.RoseBot()
+    d = robot.drive_system
+    ps = robot.sensor_system.ir_proximity_sensor
+    c = robot.sensor_system.camera
+    a = robot.arm_and_claw
+    s = robot.sound_system
+    d.go_forward_until_distance_is_less_than(3, speed)
+    for k in range(5):
+        s.speak("a-ga")
+        a.move_arm_to_position(5000)
+        time.sleep(1)
+        a.move_arm_to_position(4000)
+        a.lower_arm()
+        s.speech_maker.speak("Wahhh")
+
+    d.go(20, 10)
+    time.sleep(5)
+
+def m3_find_bottle(speed):
+    pass
+

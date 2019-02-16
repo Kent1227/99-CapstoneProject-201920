@@ -113,6 +113,10 @@ class DelegateThatReceives(object):
     def m3_beep_retrieve(self, dir, speed):
         m3.m3_beep_retrieve(dir, int(speed))
 
+    #m3 Sprint 3
+    def m3_baby_robot(self, speed):
+        m3.m3_baby_walk(int(speed))
+
     # m4
     def m4_led_proximity(self, initial, delta, speed):
         m4.m4_led_proximity(int(initial), float(delta), int(speed))
