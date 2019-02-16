@@ -9,7 +9,7 @@
 
 import m4_extra as m4
 import m3_extra as m3
-
+import m2_Extra as m2
 
 class DelegateThatReceives(object):
     def __init__(self, robot):
@@ -119,3 +119,13 @@ class DelegateThatReceives(object):
 
     def m4_led_retrieve(self, dir, speed):
         m4.m4_led_retrieve(dir, speed)
+
+    # m2 stuff
+    def m2_find_homework(self):
+        m2.find_homework(self.robot)
+
+    def m2_find_games(self):
+        m2.find_games(self.robot)
+
+    def m2_find_food(self):
+        m2.find_food(self.robot)

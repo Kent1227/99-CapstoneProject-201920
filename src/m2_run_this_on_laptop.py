@@ -80,20 +80,19 @@ def main():
 def get_new_frame(main_frame, mqtt_sender):
     find_homework = ttk.Button(main_frame, text="Find Math Homework")
     find_homework.grid()
-    find_homework['command'] = lambda: mqtt_sender.send_message("Find Math Homework")
+    find_homework['command'] = lambda: mqtt_sender.send_message("m2_find_homework")
 
     find_games = ttk.Button(main_frame, text="Find Video Games")
     find_games.grid()
-    find_games['command'] = lambda: mqtt_sender.send_message("Find Video Games")
+    find_games['command'] = lambda: mqtt_sender.send_message("m2_find_games")
 
     find_food = ttk.Button(main_frame, text="Find Food")
     find_food.grid()
-    find_food['command'] = lambda: mqtt_sender.send_message("Find Food")
+    find_food['command'] = lambda: mqtt_sender.send_message("m2_find_food")
 
     go_to_sleep = ttk.Button(main_frame, text="Go to Sleep")
     go_to_sleep.grid()
     go_to_sleep['command'] = lambda: mqtt_sender.send_message("Go to Sleep")
-
 
 
 # -----------------------------------------------------------------------------

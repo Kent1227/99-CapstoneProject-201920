@@ -123,6 +123,16 @@ class DriveSystem(object):
             pass
         self.stop()
 
+    def pivot_left(self, speed, duration):
+        for _ in range(int(duration)):
+            self.left_motor.turn_off()
+            self.right_motor.turn_on(speed)
+
+    def pivot_right(self, speed, duration):
+        for _ in range(int(duration)):
+            self.left_motor.turn_on(speed)
+            self.right_motor.turn_off()
+
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
     # -------------------------------------------------------------------------
