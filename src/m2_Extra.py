@@ -5,6 +5,49 @@
 
 
 import rosebot
+import time
+
+
+#def beep_proxy(robot, initial, delta, speed):
+#    ps = robot.sensor_system.ir_proximity_sensor
+#    b = robot.sound_system
+#    robot.drive_system.go(int(speed),int(speed))
+#    while ps.get_distance_in_inches() > 2:
+#        rate = float(initial) + float(delta) / float(ps.get_distance_in_inches())
+#        b.beep_number_of_times(2)
+#        time.sleep(1 / rate)
+#    robot.drive_system.stop()
+#    robot.arm_and_claw.raise_arm()
+#
+#
+#def beep_retrieve(robot, direction, speed):
+#    d = robot.drive_system
+#    if direction == "CW":
+#        d.spin_clockwise_until_sees_object(int(speed), 100)
+#    elif direction == "CCW":
+#        d.spin_counterclockwise_until_sees_object(int(speed), 100)
+#    d.stop()
+#    camera_aim()
+#    beep_proxy(robot, 1, 0.1, int(speed))
+#
+#
+#def camera_aim():
+#    robot = rosebot.RoseBot()
+#    d = robot.drive_system
+#    c = robot.sensor_system.camera
+#    while True:
+#        print(c.get_biggest_blob().center.x)
+#        while c.get_biggest_blob().center.x > 170:
+#            d.go(-20, 20)
+#            print(c.get_biggest_blob().center.x)
+#        d.stop()
+#        while c.get_biggest_blob().center.x < 160:
+#            d.go(20, -20)
+#            print(c.get_biggest_blob().center.x)
+#        d.stop()
+#        if 160 < c.get_biggest_blob().center.x < 170:
+#            break
+
 
 # Not sure which find homework will work better, if they work at all
 # The one below uses the object mode

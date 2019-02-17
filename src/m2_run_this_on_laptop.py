@@ -40,41 +40,123 @@ def main():
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    #teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame = get_shared_frames(main_frame, mqtt_sender)
+    #teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proxy_frame, color_frame, camera_frame = get_shared_frames(main_frame, mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
     # DONE: Implement and call get_my_frames(...)
     get_new_frame(main_frame, mqtt_sender)
-    # -------------------------------------------------------------------------
-    # Grid the frames.
-    # -------------------------------------------------------------------------
-    #grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame)
-
-    # -------------------------------------------------------------------------
-    # The event loop:
-    # -------------------------------------------------------------------------
+#    def get_m2_beep_proxy_frame(window, mqtt_sender):
+#        frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+#        frame.grid()
+#        frame_label = ttk.Label(frame, text="Beep Proxy")
+#        begin_button = ttk.Button(frame, text="Begin Beep_Proxy")
+#        initial_entry = ttk.Entry(frame)
+#        delta_entry = ttk.Entry(frame)
+#        initial_label = ttk.Label(frame, text="Initial:")
+#        delta_label = ttk.Label(frame, text="Delta:")
+#        speed_label = ttk.Label(frame, text="Speed:")
+#        speed_entry = ttk.Entry(frame)
+#        frame_label.grid(row=0, column=1)
+#        begin_button.grid(row=1, column=0)
+#        initial_label.grid(row=1, column=1)
+#        initial_entry.grid(row=1, column=2)
+#        delta_label.grid(row=2, column=1)
+#        delta_entry.grid(row=2, column=2)
+#        speed_label.grid(row=3, column=1)
+#        speed_entry.grid(row=3, column=2)
+#        begin_button["command"] = lambda: handle_m2_beep_proximity(mqtt_sender, initial_entry, delta_entry, speed_entry)
+#        return frame
+#
+#    def get_m2_beep_retrieve_frame(window, mqtt_sender):
+#        frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+#        frame.grid()
+#        frame_label = ttk.Label(frame, text="BEEP_Retrieve")
+#        start_button = ttk.Button(frame, text="Start BEEP_Retrieve")
+#        speed_entry = ttk.Entry(frame)
+#        speed_label = ttk.Label(frame, text="Speed:")
+#        state = tkinter.IntVar()
+#        direction_check = ttk.Checkbutton(frame, variable=state)
+#        direction_label = ttk.Label(frame, text="Clockwise?")
+#        frame_label.grid(row=0, column=1)
+#        start_button.grid(row=1, column=0)
+#        speed_label.grid(row=1, column=1)
+#        speed_entry.grid(row=1, column=2)
+#        direction_label.grid(row=2, column=1)
+#        direction_check.grid(row=2, column=2)
+#        start_button["command"] = lambda: handle_m2_beep_retrieve(mqtt_sender, speed_entry, state)
+#        return frame
+#
+#    beep_proxy_frame = get_m2_beep_proxy_frame(main_frame, mqtt_sender)
+#    beep_retrieve_frame = get_m2_beep_retrieve_frame(main_frame, mqtt_sender)
+#
+#    # -------------------------------------------------------------------------
+#    # Grid the frames.
+#    # -------------------------------------------------------------------------
+#    grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proxy_frame, beep_proxy_frame, beep_retrieve_frame, color_frame, camera_frame)
+#
+#    # -------------------------------------------------------------------------
+#    # The event loop:
+#    # -------------------------------------------------------------------------
     root.mainloop()
-
-
+#
+#
 #def get_shared_frames(main_frame, mqtt_sender):
 #   teleop_frame = shared_gui.get_teleoperation_frame(main_frame, mqtt_sender)
 #   arm_frame = shared_gui.get_arm_frame(main_frame, mqtt_sender)
 #   control_frame = shared_gui.get_control_frame(main_frame, mqtt_sender)
 #   drive_frame = shared_gui.get_drive_system_frame(main_frame, mqtt_sender)
 #   sound_frame = shared_gui.get_sound_frame(main_frame, mqtt_sender)
-#   proximity_frame = shared_gui.get_proximity_frame(main_frame, mqtt_sender)
-#   return teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame
-
-
-#def grid_frames(teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proximity_frame):
-#   teleop_frame.grid(row=0, column=0)
-#   arm_frame.grid(row=1, column=0)
-#   control_frame.grid(row=2, column=0)
-#   drive_frame.grid(row=3, column=0)
-#   sound_frame.grid(row=4, column=0)
-#   proximity_frame.grid(row=5, column=0)
+#   proxy_frame = shared_gui.get_proximity_frame(main_frame, mqtt_sender)
+#   color_frame = shared_gui.get_color_frame(main_frame, mqtt_sender)
+#   camera_frame = shared_gui.get_camera_frame(main_frame, mqtt_sender)
+#
+#   return teleop_frame, arm_frame, control_frame, drive_frame, sound_frame, proxy_frame, color_frame, camera_frame
+#
+#
+#def grid_frames(teleop_frame, arm_frame, control_frame, drive_frame,
+#                sound_frame, proxy_frame, beep_proxy_frame,
+#                beep_retrieve_frame, color_frame, camera_frame):
+#    teleop_frame.grid(row=0, column=0)
+#    arm_frame.grid(row=1, column=0)
+#    control_frame.grid(row=2, column=0)
+#    drive_frame.grid(row=3, column=0)
+#    sound_frame.grid(row=4, column=0)
+#    proxy_frame.grid(row=0, column=1)
+#    beep_proxy_frame.grid(row=1, column=1)
+#    beep_retrieve_frame.grid(row=2, column=1)
+#    color_frame.grid(row=3, column=1)
+#    camera_frame.grid(row=4, column=1)
+#
+#
+#def handle_m2_beep_proxy(mqtt_sender, entry_box1, entry_box2, entry_box3):
+#    """
+#     Tells the robot to go pick up an object,
+#      beeping increasingly faster as it nears the object.
+#       :type mqtt_sender: com.MqttClient
+#       :type entry_box1: ttk.Entry
+#       :type entry_box2: ttk.Entry
+#       :type entry_box: ttk.Entry
+#     """
+#    print("m2_beep_proxy")
+#    mqtt_sender.send_message("m2_beep_proxy", [entry_box1.get(), entry_box2.get(), entry_box3.get()])
+#
+#
+#def handle_m2_beep_retrieve(mqtt_sender, entry_box, check):
+#    """
+#    Tells the robot to find an object, then to go pick up an object,
+#      beeping increasingly faster as it nears the object.
+#      :type mqtt_sender: com.MqttClient
+#      :type entry_box: ttk.Entry
+#      :type entry_box2: ttk.Entry
+#    """
+#    if check.get() == 1:
+#        dir = "CW"
+#    else:
+#        dir = "CCW"
+#    print("m2_beep_retrieve", dir, entry_box.get())
+#    mqtt_sender.send_message("m2_beep_retrieve", [dir, entry_box.get()])
 
 
 def get_new_frame(main_frame, mqtt_sender):
