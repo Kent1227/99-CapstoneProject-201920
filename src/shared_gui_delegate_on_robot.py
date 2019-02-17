@@ -117,6 +117,9 @@ class DelegateThatReceives(object):
     def m3_baby_robot(self, speed):
         m3.m3_baby_walk(int(speed))
 
+    def m3_find_bottle(self, speed):
+        m3.m3_find_bottle(int(speed))
+
     # m4
     def m4_led_proximity(self, initial, delta, speed):
         m4.m4_led_proximity(int(initial), float(delta), int(speed))

@@ -8,6 +8,7 @@
 """
 import rosebot
 import time
+import m4_extra as m4
 
 
 def m3_beep_proximity(initial, delta, speed):
@@ -60,16 +61,16 @@ def m3_baby_walk(speed):
     s = robot.sound_system
     d.go_forward_until_distance_is_less_than(3, speed)
     for k in range(5):
-        s.speak("a-ga")
         a.move_arm_to_position(5000)
-        time.sleep(1)
         a.move_arm_to_position(4000)
-        a.lower_arm()
-        s.speech_maker.speak("Wahhh")
+        s.speak("a-ga")
+        time.sleep(2)
+        s.speech_maker.speak("goo goo ga ga")
+    a.lower_arm()
 
-    d.go(20, 10)
-    time.sleep(5)
+    m3_find_bottle(speed)
 
 def m3_find_bottle(speed):
-    pass
+    direction = "CCW"
+    m4.m4_led_retrieve(direction, speed)
 
