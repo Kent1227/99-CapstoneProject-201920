@@ -142,6 +142,9 @@ class DelegateThatReceives(object):
     def m2_find_food(self):
         m2.find_food(self.robot)
 
+    def m2_go_to_sleep(self):
+        m2.go_to_sleep(self.robot)
+
     #def m2_beep_proxy(self, initial, delta, speed):
         #m2.beep_proxy(self.robot, int(initial), float(delta), int(speed))
 

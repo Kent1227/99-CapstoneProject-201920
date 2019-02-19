@@ -172,7 +172,7 @@ def get_new_frame(main_frame, mqtt_sender):
     find_food.grid()
     find_food['command'] = lambda: mqtt_sender.send_message("m2_find_food")
 
-    go_to_sleep = ttk.Button(main_frame, text="Go to Sleep")
+    go_to_sleep = ttk.Button(main_frame, text="m2_go_to_sleep")
     go_to_sleep.grid()
     go_to_sleep['command'] = lambda: mqtt_sender.send_message("Go to Sleep")
 

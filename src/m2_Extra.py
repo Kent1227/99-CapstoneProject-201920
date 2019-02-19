@@ -65,6 +65,7 @@ def find_homework(robot):
     robot.drive_system.stop()
     robot.sound_system.speak("DEATH TO ALL HOMEWORK!")
 
+
 # The one below uses the color mode
 # The one above does indeed work better
 # Do not use the one below
@@ -129,3 +130,6 @@ def find_food(robot):
     robot.sound_system.speak("Where is the nearest microwave?")
     time.sleep(5)
     robot.arm_and_claw.lower_arm()
+
+
+def go_to_sleep(robot):
