@@ -176,8 +176,22 @@ def get_new_frame(main_frame, mqtt_sender):
     go_to_sleep.grid()
     go_to_sleep['command'] = lambda: mqtt_sender.send_message("Go to Sleep")
 
+    calibrate_arm = ttk.Button(main_frame, text="Calibrate Arm")
+    calibrate_arm.grid()
+    calibrate_arm['command'] = lambda: mqtt_sender.send_message("calibrate_arm")
+
+    raise_arm = ttk.Button(main_frame, text="Raise Arm")
+    raise_arm.grid()
+    raise_arm['command'] = lambda: mqtt_sender.send_message("raise_arm")
+
+    lower_arm = ttk.Button(main_frame, text="Lower Arm")
+    lower_arm.grid()
+    lower_arm['command'] = lambda: mqtt_sender.send_message("lower_arm")
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
+
+
 main()
+
