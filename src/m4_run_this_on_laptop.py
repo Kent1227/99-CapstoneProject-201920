@@ -24,14 +24,14 @@ def chess():
     root.title("Chess GUI")
     main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief="groove")
     main_frame.grid()
-    state, board, command, misc = get_gui(main_frame)
+    state, board, command, misc = get_gui(main_frame,mqtt_sender)
     build_gui(board, command, misc)
     root.mainloop()
 
-def get_gui(window):
+def get_gui(window,mqtt_sender):
     board, state = get_board_frame(window)
     command = get_command_frame(window,state)
-    misc = get_misc_frame(window)
+    misc = get_misc_frame(window,mqtt_sender)
     return state, board, command, misc
 
 def build_gui(board, command, misc):
@@ -107,17 +107,20 @@ def get_command_frame(window,state):
     submit.grid()
 
     return frame
-def get_misc_frame(window):
+def get_misc_frame(window,mqtt_sender):
     # builds the gui of miscelaneous functions
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
     frame_label = ttk.Label(frame, text="Miscelaneous")
     frame_label.grid()
     calibrate_go = ttk.Button(frame, text="Calibrate Go")
-    calibrate_go["command"] = lambda: handle_calibrate_go()
+    calibrate_go["command"] = lambda: handle_calibrate_go(mqtt_sender)
     calibrate_go.grid()
     locate = ttk.Button(frame, text="Acquire Location")
-    locate["command"] = lambda: handle_locate()
+    locate["command"] = lambda: handle_locate(mqtt_sender)
+    locate.grid()
+    locate = ttk.Button(frame, text="Acquire Location")
+    locate["command"] = lambda: handle_go_true(25, mqtt_sender)
     locate.grid()
 
     return frame
@@ -190,12 +193,18 @@ def check_x_path(current, end, state):
         change = True
     return current, change
 
-def handle_calibrate_go():
+def handle_calibrate_go(mqtt_sender):
     print("Calibrate True")
+    mqtt_sender.send_message("calibrate_true", [])
+def handle_go_true(inches, mqtt_sender):
+    print("Go True", inches)
+    mqtt_sender.send_message("go_true",[inches])
 
-def handle_locate():
+
+def handle_locate(mqtt_sender):
     print("Acquire Location")
-    mqtt_sender.send_message("m4_led_retrieve", [dir, entry_box.get()])
+    mqtt_sender.send_message("locate", [])
+
 
 
 
