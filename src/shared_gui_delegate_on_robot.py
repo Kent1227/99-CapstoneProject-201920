@@ -106,6 +106,13 @@ class DelegateThatReceives(object):
     def camera_data(self):
         self.robot.drive_system.display_camera_data()
 
+    # Later additions
+    def calibrate_true(self):
+        self.robot.drive_system.calibrate_true()
+
+    def go_true(self, inches):
+        self.robot.drive_system.go_true(inches)
+
     # m3 Beep_Proximity
     def m3_beep_proximity(self, initial, delta, speed):
         m3.m3_beep_proximity(int(initial), float(delta), int(speed))
@@ -142,3 +149,5 @@ class DelegateThatReceives(object):
 
     #def m2_beep_retrieve(self, dir, speed):
         #m2.beep_retrieve(self.robot, dir, int(speed))
+
+    # m4 sprint 3

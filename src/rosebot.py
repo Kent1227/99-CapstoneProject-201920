@@ -116,7 +116,7 @@ class DriveSystem(object):
         using the encoder (degrees traveled sensor) built into the motors.
         """
         inches_per_degree = (1.3*math.pi)/360
-        degrees = int(inches)/inches_per_degree
+        degrees = float(inches)/inches_per_degree
         self.left_motor.reset_position()
         self.go(speed, speed)
         while math.fabs(self.left_motor.get_position()) < degrees:
@@ -132,6 +132,51 @@ class DriveSystem(object):
         for _ in range(int(duration)):
             self.left_motor.turn_on(speed)
             self.right_motor.turn_off()
+
+    def calibrate_true(self):
+        # calibrates the speeds of the motors for drive_true.
+        l = self.left_motor
+        r = self.right_motor
+        ls=100
+        rs=100
+        while True:
+            l.reset_position()
+            r.reset_position()
+            l.turn_on(ls)
+            r.turn_on(rs)
+            time.sleep(.5)
+            l.turn_off()
+            r.turn_off()
+            lp = l.get_position()
+            rp = r.get_position()
+            if lp > rp:
+                ls-=1
+            elif rp > lp:
+                rs-=1
+            if lp==rp:
+                break
+        self.ltrue=ls
+        self.rtrue=rs
+
+
+    def go_true(self,inches):
+        # drives the robot straight, rather than drifting off to one side.
+        degrees = float(inches) / ((1.3 * math.pi) / 360)
+        l = self.left_motor
+        r = self.right_motor
+        l.reset_position()
+        r.reset_position()
+        if inches>0:
+            l.turn_on(self.ltrue)
+            r.turn_on(self.rtrue)
+        else:
+            l.turn_on(-self.ltrue)
+            r.turn_on(-self.rtrue)
+        while math.fabs(l.get_position()) > math.fabs(degrees):
+            pass
+        l.turn_off()
+        r.turn_off()
+        print("Difference: ", l.get_position()-r.get_position())
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.

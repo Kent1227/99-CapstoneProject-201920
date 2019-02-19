@@ -7,6 +7,18 @@
 import rosebot
 import time
 
+# Chess functions
+    # drive forward (# spaces)
+    # turn (90)
+    # grab (forward, grab, forward)
+    # place (back, let go)
+    # dispose (off board)
+    # track location
+    # check location
+        # check path
+
+
+# Basic functions
 def m4_led_proximity(initial,delta,speed):
     robot = rosebot.RoseBot()
     ps = robot.sensor_system.ir_proximity_sensor
@@ -18,8 +30,6 @@ def m4_led_proximity(initial,delta,speed):
     time.sleep(0.2)
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
-
-
 def cycle_leds(rate,led):
     for k in range(4):
         if k == 0:
@@ -35,7 +45,6 @@ def cycle_leds(rate,led):
             led.left_led.turn_off()
             led.right_led.turn_off()
         time.sleep(1 / rate)
-
 def m4_led_retrieve(direction,speed):
     robot = rosebot.RoseBot()
     d=robot.drive_system
@@ -46,7 +55,6 @@ def m4_led_retrieve(direction,speed):
     d.stop()
     camera_aim()
     m4_led_proximity(1,100,int(speed))
-
 def camera_aim():
     robot = rosebot.RoseBot()
     d = robot.drive_system
