@@ -54,7 +54,7 @@ import time
 
 
 def find_homework(robot):
-    robot.arm_and_claw.lower_arm()
+    #robot.arm_and_claw.lower_arm()
     #robot.drive_system.pivot_left(50, 5)
     robot.drive_system.go_forward_until_distance_is_less_than(5, 50)
     robot.drive_system.stop()
@@ -110,12 +110,22 @@ def find_games(robot):
     robot.drive_system.go_straight_for_inches_using_encoder(12, 100)
     robot.arm_and_claw.lower_arm()
 
+
 def find_food(robot):
-    robot.drive_system.spin_clockwise_until_sees_object(25, 1)     # Need the area of some type of food item
-    robot.drive_system.go_forward_until_distance_is_less_than(3, 100)
+    #robot.arm_and_claw.lower_arm()
+    #robot.drive_system.spin_clockwise_until_sees_object(25, 1)     # Need the area of some type of food item
+    robot.drive_system.go_forward_until_distance_is_less_than(2, 100)
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
     robot.drive_system.pivot_left(100, 5)
+    time.sleep(5)
+    robot.drive_system.stop()
     robot.sound_system.speak("Oh my God I am literally so hungry I haven't eaten in over 15 minutes")
-    robot.drive_system.go_straight_for_inches_using_encoder(12, 100)
-
+    time.sleep(8)
+    robot.drive_system.go_straight_for_inches_using_encoder(6, 100)
+    robot.drive_system.pivot_right(100, 5)
+    time.sleep(5)
+    robot.drive_system.stop()
+    robot.sound_system.speak("Where is the nearest microwave?")
+    time.sleep(5)
+    robot.arm_and_claw.lower_arm()

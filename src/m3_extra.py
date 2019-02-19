@@ -10,7 +10,6 @@ import rosebot
 import time
 import m4_extra as m4
 
-
 def m3_beep_proximity(initial, delta, speed):
     robot = rosebot.RoseBot()
     ps = robot.sensor_system.ir_proximity_sensor
@@ -52,7 +51,7 @@ def camera_aim():
             break
 
 
-def m3_baby_walk(speed):
+def m3_baby_walk(speed, progress_state):
     robot = rosebot.RoseBot()
     d = robot.drive_system
     ps = robot.sensor_system.ir_proximity_sensor
@@ -60,17 +59,41 @@ def m3_baby_walk(speed):
     a = robot.arm_and_claw
     s = robot.sound_system
     d.go_forward_until_distance_is_less_than(3, speed)
-    for k in range(5):
+    for k in range(2):
         a.move_arm_to_position(5000)
         a.move_arm_to_position(4000)
-        s.speak("a-ga")
+        s.speak("WAHHHH WAHHH")
         time.sleep(2)
         s.speech_maker.speak("goo goo ga ga")
     a.lower_arm()
 
-    m3_find_bottle(speed)
+    m3_find_bottle(speed, progress_state)
 
-def m3_find_bottle(speed):
-    direction = "CCW"
-    m4.m4_led_retrieve(direction, speed)
+# I used (m4)Ethan's  led retrieve code as my base, but due to some desired functions,
+# the code needed to be altered.
+
+def m3_baby_proximity(initial, delta, speed, progress_state):
+    robot = rosebot.RoseBot()
+    ps = robot.sensor_system.ir_proximity_sensor
+    l = robot.led_system
+    d = robot.drive_system
+    robot.drive_system.go(speed, speed)
+    while ps.get_distance_in_inches() > 2:
+        rate = float(initial) + (float(delta) / ps.get_distance_in_inches())
+        m4.cycle_leds(rate, l)
+
+    time.sleep(0.2)
+    d.stop()
+    robot.arm_and_claw.raise_arm()
+
+
+def m3_find_bottle(speed, progress_state):
+    robot = rosebot.RoseBot()
+    d = robot.drive_system
+    d.spin_counterclockwise_until_sees_object(int(speed), 100)
+    d.stop()
+    camera_aim()
+    m3_baby_proximity(1, 100, int(speed), int(progress_state))
+
+
 
