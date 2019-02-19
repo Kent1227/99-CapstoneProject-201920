@@ -67,33 +67,30 @@ def m3_baby_walk(speed, progress_state):
         s.speech_maker.speak("goo goo ga ga")
     a.lower_arm()
 
-    m3_find_bottle(speed, progress_state)
+    m3_find_bottle(speed)
 
 # I used (m4)Ethan's  led retrieve code as my base, but due to some desired functions,
 # the code needed to be altered.
 
-def m3_baby_proximity(initial, delta, speed, progress_state):
+def m3_find_bottle(speed):
+    robot = rosebot.RoseBot()
+    d=robot.drive_system
+    d.spin_counterclockwise_until_sees_object(int(speed),100)
+    d.stop()
+    camera_aim()
+    m3_baby_proximity(1,100,int(speed))
+
+def m3_baby_proximity(initial,delta,speed):
     robot = rosebot.RoseBot()
     ps = robot.sensor_system.ir_proximity_sensor
     l = robot.led_system
-    d = robot.drive_system
-    robot.drive_system.go(speed, speed)
+    robot.drive_system.go(speed,speed)
     while ps.get_distance_in_inches() > 2:
-        rate = float(initial) + (float(delta) / ps.get_distance_in_inches())
-        m4.cycle_leds(rate, l)
-
+        rate = float(initial)+(float(delta)/ps.get_distance_in_inches())
+        m4.cycle_leds(rate,l)
     time.sleep(0.2)
-    d.stop()
+    robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
-
-
-def m3_find_bottle(speed, progress_state):
-    robot = rosebot.RoseBot()
-    d = robot.drive_system
-    d.spin_counterclockwise_until_sees_object(int(speed), 100)
-    d.stop()
-    camera_aim()
-    m3_baby_proximity(1, 100, int(speed), int(progress_state))
 
 
 

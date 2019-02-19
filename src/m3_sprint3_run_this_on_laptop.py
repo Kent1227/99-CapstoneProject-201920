@@ -67,21 +67,9 @@ def main():
         hunger_label.grid(row=1, column=0)
         hunger_meter.grid(row=1, column=1)
 
-        hunger_meter['maximum'] = 100
-
-        progress_state = 100
-
-        for k in range(100, -1, -1):
-            time.sleep(1)
-            hunger_meter["value"] = k
-            hunger_meter.update()
-            progress_state = k
-
         begin_button["command"] = lambda: handle_baby_robot(
-            mqtt_sender, speed_slider, progress_state)
+            mqtt_sender, speed_slider, hunger_meter, root)
         return frame
-
-
 
     baby_robot_frame = get_baby_robot(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
@@ -113,7 +101,7 @@ def grid_frames(teleop_frame, arm_and_claw_frame, control_frame, baby_robot_fram
     baby_robot_frame.grid(row=3, column=0)
 
 
-def handle_baby_robot(mqtt_sender, scale, progress_state):
+def handle_baby_robot(mqtt_sender, scale, hunger_meter, root):
     """
      Tells the robot to go pick up an object,
       beeping increasingly faster as it nears the object.
@@ -122,7 +110,17 @@ def handle_baby_robot(mqtt_sender, scale, progress_state):
        :type int: current progress of hunger_meter
      """
     print("m3_baby_robot")
-    mqtt_sender.send_message("m3_baby_robot", [scale.get(), progress_state])
+    mqtt_sender.send_message("m3_baby_robot", [scale.get()])
+
+    hunger_meter['maximum'] = 100
+    progress_state = 100
+    get_progress(progress_state, hunger_meter, root)
+
+
+def get_progress(progress_state, hunger_meter, root):
+    hunger_meter["value"] = progress_state
+    hunger_meter.update()
+    root.after(1000, lambda: get_progress(hunger_meter, (progress_state - 1), root))
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
