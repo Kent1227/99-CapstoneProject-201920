@@ -44,7 +44,6 @@ def main():
     teleop_frame, arm_and_claw_frame, control_frame = get_shared_frames(main_frame, mqtt_sender)
 
 
-
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
@@ -68,17 +67,21 @@ def main():
         hunger_label.grid(row=1, column=0)
         hunger_meter.grid(row=1, column=1)
 
+        hunger_meter['maximum'] = 100
+
+        progress_state = 100
+
+        for k in range(100, -1, -1):
+            time.sleep(1)
+            hunger_meter["value"] = k
+            hunger_meter.update()
+            progress_state = k
+
         begin_button["command"] = lambda: handle_baby_robot(
-            mqtt_sender, speed_slider)
+            mqtt_sender, speed_slider, progress_state)
         return frame
 
-    def run_progressbar(hunger_meter):
-        hunger_meter.progress_bar['maximum'] = 100
 
-        for k in range(101):
-            time.sleep(0.05)
-            hunger_meter.progress_bar["value"] = k
-            hunger_meter.progress_bar.update()
 
     baby_robot_frame = get_baby_robot(main_frame, mqtt_sender)
     # -------------------------------------------------------------------------
@@ -89,13 +92,6 @@ def main():
     # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
-    def run_progressbar(hunger_meter):
-        hunger_meter.progress_bar['maximum'] = 100
-
-        for k in range(101):
-            time.sleep(0.05)
-            hunger_meter.progress_bar["value"] = k
-            hunger_meter.progress_bar.update()
 
     root.mainloop()
 
@@ -117,15 +113,16 @@ def grid_frames(teleop_frame, arm_and_claw_frame, control_frame, baby_robot_fram
     baby_robot_frame.grid(row=3, column=0)
 
 
-def handle_baby_robot(mqtt_sender, scale):
+def handle_baby_robot(mqtt_sender, scale, progress_state):
     """
      Tells the robot to go pick up an object,
       beeping increasingly faster as it nears the object.
        :type mqtt_sender: com.MqttClient
        :type scale: ttk.scale
+       :type int: current progress of hunger_meter
      """
     print("m3_baby_robot")
-    mqtt_sender.send_message("m3_baby_robot", [scale.get()])
+    mqtt_sender.send_message("m3_baby_robot", [scale.get(), progress_state])
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
