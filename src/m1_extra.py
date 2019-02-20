@@ -16,8 +16,6 @@ def disco(robot):
 def shake(robot):
     """
     :type robot: rosebot.RoseBot
-    :param robot:
-    :return:
     """
     robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.turn_degrees(40, 100)
@@ -34,8 +32,6 @@ def shake(robot):
 def spin(robot):
     """
     :type robot: rosebot.RoseBot
-    :param robot:
-    :return:
     """
     robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.turn_degrees(720, 100)
@@ -45,8 +41,6 @@ def spin(robot):
 def raise_the_roof(robot):
     """
     :type robot: rosebot.RoseBot
-    :param robot:
-    :return:
     """
     robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.stop()
