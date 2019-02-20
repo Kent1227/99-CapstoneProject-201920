@@ -77,7 +77,7 @@ def main():
 
         main_frame.configure(background=tkvar.get())
 
-        color_button["command"] = lambda: handle_change_color(main_frame, tkvar, color_change)
+        color_button["command"] = lambda: handle_change_color(main_frame, tkvar)
         begin_button["command"] = lambda: handle_baby_robot(
             mqtt_sender, speed_slider, hunger_meter, root)
         return frame
@@ -121,26 +121,35 @@ def handle_baby_robot(mqtt_sender, scale, hunger_meter, root):
        :type int: current progress of hunger_meter
      """
     print("m3_baby_robot")
-    mqtt_sender.send_message("m3_baby_robot", [scale.get()])
 
     hunger_meter['maximum'] = 100
-    progress_state = int(100)
-    get_progress(mqtt_sender, progress_state, hunger_meter, root)
+    progress_state = Progress_state()
+    get_progress(mqtt_sender, progress_state, hunger_meter, root, scale)
 
 
-def get_progress(mqtt_sender, progress_state, hunger_meter, root):
-    hunger_meter["value"] = int(progress_state)
+def get_progress(mqtt_sender, progress_state, hunger_meter, root, scale):
+    hunger_meter["value"] = (progress_state.progress_state)
     hunger_meter.update()
+
+    mqtt_sender.send_message("m3_baby_robot", [scale.get(), progress_state.progress_state])
+
     if hunger_meter["value"] > 0:
-        root.after(1000, lambda: get_progress(mqtt_sender, (progress_state - 1), hunger_meter, root))
+        progress_state.progress_state = progress_state.progress_state - 1
+        root.after(1000, lambda: get_progress(mqtt_sender, progress_state, hunger_meter, root, scale))
     else:
         mqtt_sender.send_message("sleep_time")
         exit()
 
+class Progress_state(object):
+    def __init__(self):
+        self.progress_state = 100
 
-def handle_change_color(main_frame, tkvar, color_change):
+def handle_change_color(main_frame, tkvar):
     main_frame.configure(background=tkvar.get())
 
+#resets the progress bar to 100, showing that the baby has been fed.
+def fed(progress_state):
+    progress_state.progress_state = 100
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

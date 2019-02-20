@@ -14,9 +14,10 @@ import m1_extra as m1
 
 
 class DelegateThatReceives(object):
-    def __init__(self, robot):
+    def __init__(self, robot, mqtt_reciever = None):
         """:type robot: rosebot.RoseBot"""
         self.robot = robot
+        self.mqtt_reciever = mqtt_reciever
         self.leave = False
 
     # Teleoperation functions
@@ -126,7 +127,7 @@ class DelegateThatReceives(object):
 
     #m3 Sprint 3
     def m3_baby_robot(self, speed, progress_state):
-        m3.m3_baby_walk(int(speed), int(progress_state))
+        m3.m3_baby_walk(int(speed), int(progress_state), self.robot, self.mqtt_reciever)
 
     def sleep_time(self):
         m3.sleep_time()
