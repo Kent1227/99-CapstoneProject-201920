@@ -270,6 +270,7 @@ def get_proximity_frame(window, mqtt_sender):
 
     return frame
 
+
 def get_color_frame(window, mqtt_sender):
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
@@ -305,6 +306,7 @@ def get_color_frame(window, mqtt_sender):
 
     return frame
 
+
 def get_camera_frame(window, mqtt_sender):
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
@@ -333,6 +335,7 @@ def get_camera_frame(window, mqtt_sender):
 
     return frame
 
+
 def get_m3_beep_proximity_frame(window, mqtt_sender):
 
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
@@ -354,6 +357,27 @@ def get_m3_beep_proximity_frame(window, mqtt_sender):
 
     begin_button["command"] = lambda: handle_m3_proximity(
         mqtt_sender, initial_entry, delta_entry)
+    return frame
+
+
+def get_m1_dance_frame(window, mqtt_sender):
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    frame_label = ttk.Label(frame, text="Make the robot dance!")
+    frame_label2 = ttk.Label(frame, text="Dance")
+    disco_button = ttk.Button(frame, text="Disco")
+    raise_the_roof_button = ttk.Button(frame, text="Raise the Roof")
+    shake_button = ttk.Button(frame, text="Shake")
+    spin_button = ttk.Button(frame, text="Spin")
+
+    frame_label.grid(row=1, column=1)
+    frame_label2.grid(row=0, column=1)
+    disco_button.grid(row=2, column=0)
+    raise_the_roof_button.grid(row=2, column=2)
+    shake_button.grid(row=3, column=0)
+    spin_button.grid(row=3, column=2)
+
     return frame
 
 ###############################################################################

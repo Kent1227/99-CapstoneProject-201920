@@ -10,6 +10,7 @@
 import m4_extra as m4
 import m3_extra as m3
 import m2_Extra as m2
+import m1_extra as m1
 
 class DelegateThatReceives(object):
     def __init__(self, robot):

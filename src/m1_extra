@@ -1,0 +1,10 @@
+import rosebot
+import time
+
+def disco(robot):
+
+def shake(robot):
+
+def spin(robot):
+
+def raise_the_roof(robot):
