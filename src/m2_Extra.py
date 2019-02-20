@@ -137,7 +137,7 @@ def go_to_sleep(robot):
     # robot.arm_and_claw.lower_arm()
     robot.sound_system.speak("Well, it has been a long day. Time to get some sleep.")
     time.sleep(5)
-    robot.drive_system.go_straight_until_color_is("Red", 50)     # May need to add a different color, not sure yet
+    robot.drive_system.go_straight_until_color_is("White", 50)     # May need to add a different color, not sure yet
     robot.drive_system.stop()
     robot.drive_system.pivot_left(100, 5)
     time.sleep(5)
