@@ -158,4 +158,8 @@ def go_to_sleep(robot):
 def snore(robot, num_of_snores):
     for _ in range(num_of_snores):
         robot.sound_system.speak("Snore")
-        time.sleep(3)
+        time.sleep(2)
+
+
+def play_tone(robot):
+    robot.sound_system.play_tone(500, 440)

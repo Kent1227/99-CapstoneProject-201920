@@ -34,7 +34,7 @@ def main():
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
-    main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief='groove')
+    main_frame = tkinter.Frame(root, borderwidth=5, relief='groove', background="black")
     main_frame.grid()
 
     # -------------------------------------------------------------------------
@@ -160,33 +160,48 @@ def main():
 
 
 def get_new_frame(main_frame, mqtt_sender):
-    find_homework = ttk.Button(main_frame, text="Find Math Homework")
-    find_homework.grid()
+    label1 = ttk.Label(main_frame, text="Student Functions:", background="white")
+    label1.grid(row=0, column=0)
+
+    find_homework = tkinter.Button(main_frame, text="Find Homework", background="red")
+    find_homework.grid(row=1, column=0)
     find_homework['command'] = lambda: mqtt_sender.send_message("m2_find_homework")
 
-    find_games = ttk.Button(main_frame, text="Find Video Games")
-    find_games.grid()
+    find_games = tkinter.Button(main_frame, text="Find Video Games", background="red")
+    find_games.grid(row=2, column=1)
     find_games['command'] = lambda: mqtt_sender.send_message("m2_find_games")
 
-    find_food = ttk.Button(main_frame, text="Find Food")
-    find_food.grid()
+    find_food = tkinter.Button(main_frame, text="Find Food", background="red")
+    find_food.grid(row=1, column=2)
     find_food['command'] = lambda: mqtt_sender.send_message("m2_find_food")
 
-    go_to_sleep = ttk.Button(main_frame, text="Go To Sleep")
-    go_to_sleep.grid()
+    go_to_sleep = tkinter.Button(main_frame, text="Go To Sleep", background="red")
+    go_to_sleep.grid(row=2, column=3)
     go_to_sleep['command'] = lambda: mqtt_sender.send_message("m2_go_to_sleep")
 
-    calibrate_arm = ttk.Button(main_frame, text="Calibrate Arm")
-    calibrate_arm.grid()
+    empty_label1 = ttk.Label(main_frame, text="", background="black")
+    empty_label1.grid(row=3, column=0)
+
+    label2 = ttk.Label(main_frame, text="Robot Functions:", background="white")
+    label2.grid(row=4, column=0)
+
+    calibrate_arm = tkinter.Button(main_frame, text="Calibrate Arm", background="gray")
+    calibrate_arm.grid(row=5, column=0)
     calibrate_arm['command'] = lambda: mqtt_sender.send_message("calibrate_arm")
 
-    raise_arm = ttk.Button(main_frame, text="Raise Arm")
-    raise_arm.grid()
+    raise_arm = tkinter.Button(main_frame, text="Raise Arm", background="gray")
+    raise_arm.grid(row=6, column=1)
     raise_arm['command'] = lambda: mqtt_sender.send_message("raise_arm")
 
-    lower_arm = ttk.Button(main_frame, text="Lower Arm")
-    lower_arm.grid()
+    lower_arm = tkinter.Button(main_frame, text="Lower Arm", background="gray")
+    lower_arm.grid(row=5, column=2)
     lower_arm['command'] = lambda: mqtt_sender.send_message("lower_arm")
+
+    stop = tkinter.Button(main_frame, text="Play Tone", background="yellow")
+    stop.grid(row=6, column=3)
+    stop['command'] = lambda: mqtt_sender.send_message("m2_play_tone")
+
+    main_frame.bind_all('<Key-F11>', lambda event: mqtt_sender.send_message("m2_play_tone"))
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
