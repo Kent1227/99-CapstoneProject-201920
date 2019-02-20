@@ -12,6 +12,7 @@ import m3_extra as m3
 import m2_Extra as m2
 import m1_extra as m1
 
+
 class DelegateThatReceives(object):
     def __init__(self, robot):
         """:type robot: rosebot.RoseBot"""
@@ -102,8 +103,10 @@ class DelegateThatReceives(object):
     # Camera
     def camera_cw(self,area,speed):
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
+
     def camera_ccw(self,area,speed):
         self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed),int(area))
+
     def camera_data(self):
         self.robot.drive_system.display_camera_data()
 
@@ -148,13 +151,10 @@ class DelegateThatReceives(object):
     def m2_go_to_sleep(self):
         m2.go_to_sleep(self.robot)
 
-    def m2_play_tone(self):
-        m2.play_tone(self.robot)
+    # def m2_beep_proxy(self, initial, delta, speed):
+    # m2.beep_proxy(self.robot, int(initial), float(delta), int(speed))
 
-    #def m2_beep_proxy(self, initial, delta, speed):
-        #m2.beep_proxy(self.robot, int(initial), float(delta), int(speed))
-
-    #def m2_beep_retrieve(self, dir, speed):
-        #m2.beep_retrieve(self.robot, dir, int(speed))
+    # def m2_beep_retrieve(self, dir, speed):
+    # m2.beep_retrieve(self.robot, dir, int(speed))
 
     # m4 sprint 3
