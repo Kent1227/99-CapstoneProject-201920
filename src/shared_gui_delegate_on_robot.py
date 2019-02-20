@@ -157,6 +157,9 @@ class DelegateThatReceives(object):
     def m2_go_to_sleep(self):
         m2.go_to_sleep(self.robot)
 
+    def m2_play_tone(self):
+        m2.play_tone(self.robot)
+
     # m1
 
     def m1_disco(self):
