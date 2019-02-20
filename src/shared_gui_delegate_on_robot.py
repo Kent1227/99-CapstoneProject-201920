@@ -151,6 +151,20 @@ class DelegateThatReceives(object):
     def m2_go_to_sleep(self):
         m2.go_to_sleep(self.robot)
 
+    # m1
+
+    def m1_disco(self):
+        m1.disco(self.robot)
+
+    def m1_raise(self):
+        m1.raise_the_roof(self.robot)
+
+    def m1_shake(self):
+        m1.shake(self.robot)
+
+    def m1_spin(self):
+        m1.spin(self.robot)
+
     # def m2_beep_proxy(self, initial, delta, speed):
     # m2.beep_proxy(self.robot, int(initial), float(delta), int(speed))
 

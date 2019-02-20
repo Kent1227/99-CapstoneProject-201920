@@ -700,3 +700,23 @@ def handle_camera_data(mqtt_sender):
 
 # m3
 
+
+def handle_disco(mqtt_sender):
+    print("Disco")
+    mqtt_sender.send_message("m1_disco")
+
+
+def handle_spin(mqtt_sender):
+    print("Spin")
+    mqtt_sender.send_message("m1_spin")
+
+
+def handle_shake(mqtt_sender):
+    print("Shake")
+    mqtt_sender.send_message("m1_shake")
+
+
+def handle_raise(mqtt_sender):
+    print("Raise the Roof")
+    mqtt_sender.send_message("m1_raise")
+
