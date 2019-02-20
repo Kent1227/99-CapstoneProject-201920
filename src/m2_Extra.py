@@ -59,7 +59,7 @@ def find_homework(robot):
     robot.drive_system.go_forward_until_distance_is_less_than(5, 50)
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
-    robot.drive_system.go_straight_for_inches_using_encoder(2, 100)
+    robot.drive_system.go_straight_for_inches_using_encoder(2, 50)
     robot.arm_and_claw.lower_arm()
     robot.drive_system.go_straight_for_inches_using_encoder(4, 50)
     robot.drive_system.stop()
@@ -94,9 +94,9 @@ def find_games(robot):
     robot.drive_system.pivot_left(100, 5)
     time.sleep(5)
     robot.drive_system.stop()
-    robot.sound_system.speak("I love video games! I think I will go play some right now.")
+    robot.sound_system.speak("I LOVE VIDEO GAMES! I think I will go play some right now.")
     time.sleep(7)
-    robot.drive_system.go_straight_for_inches_using_encoder(12, 100)
+    robot.drive_system.go_straight_for_inches_using_encoder(12, 50)
     robot.drive_system.stop()
     robot.drive_system.pivot_right(100, 5)
     time.sleep(5)
@@ -115,7 +115,7 @@ def find_games(robot):
 def find_food(robot):
     #robot.arm_and_claw.lower_arm()
     #robot.drive_system.spin_clockwise_until_sees_object(25, 1)     # Need the area of some type of food item
-    robot.drive_system.go_forward_until_distance_is_less_than(2, 100)
+    robot.drive_system.go_forward_until_distance_is_less_than(2, 50)
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
     robot.drive_system.pivot_left(100, 5)
@@ -123,7 +123,7 @@ def find_food(robot):
     robot.drive_system.stop()
     robot.sound_system.speak("Oh my God I am literally so hungry I haven't eaten in over 15 minutes")
     time.sleep(8)
-    robot.drive_system.go_straight_for_inches_using_encoder(6, 100)
+    robot.drive_system.go_straight_for_inches_using_encoder(6, 50)
     robot.drive_system.pivot_right(100, 5)
     time.sleep(5)
     robot.drive_system.stop()
@@ -133,3 +133,24 @@ def find_food(robot):
 
 
 def go_to_sleep(robot):
+    #robot.arm_and_claw.lower_arm()
+    robot.sound_system.speak("Well, it has been a long day. Time to get some sleep.")
+    robot.drive_system.go_straight_until_color_is("Color", 50)     # May need to add a different color, not sure yet
+    robot.drive_system.stop()
+    robot.drive_system.pivot_left(100, 5)
+    time.sleep(5)
+    robot.sound_system.speak("I sure hope they have Chicken Strips for lunch tomorrow.")
+    snore(robot, 3)
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.pivot_left(100, 5)
+    time.sleep(5)
+    robot.sound_system.speak("OH MY LORD I FORGOT ABOUT MY HOMEWORK DUE AT MIDNIGHT OH NO PLEASE NO WHY ME!")
+    time.sleep(8)
+    robot.drive_system.go_straight_for_inches_using_encoder(24, 100)
+    robot.arm_and_claw.lower_arm()
+
+
+def snore(robot, num_of_snores):
+    for _ in range(num_of_snores):
+        robot.sound_system.speak("Snore")
+        time.sleep(2)
