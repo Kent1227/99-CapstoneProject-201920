@@ -39,6 +39,7 @@ def main():
     main_frame = tkinter.Frame(root, borderwidth=50, relief='groove')
     main_frame.grid()
 
+
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
@@ -61,7 +62,7 @@ def main():
         begin_button = ttk.Button(frame, text="Wake Up Baby")
         speed_label = ttk.Label(frame, text="Speed:")
         speed_slider = ttk.Scale(frame, from_=10, to=100)
-        hunger_meter = ttk.Progressbar(frame)
+        hunger_meter = ttk.Progressbar(frame, style="color.Horizontal.TProgressbar")
         hunger_label = ttk.Label(frame, text="Baby's Hunger")
         color_change = ttk.OptionMenu(frame, tkvar, *colors)
         color_button = ttk.Button(frame, text="Change Color")
@@ -146,6 +147,9 @@ class Progress_state(object):
 
 def handle_change_color(main_frame, tkvar):
     main_frame.configure(background=tkvar.get())
+    s = ttk.Style()
+    s.theme_use('clam')
+    s.configure("color.Horizontal.TProgressbar", foreground=tkvar.get(), background=tkvar.get())
 
 #resets the progress bar to 100, showing that the baby has been fed.
 def fed(progress_state):
