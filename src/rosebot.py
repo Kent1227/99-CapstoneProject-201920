@@ -149,18 +149,19 @@ class DriveSystem(object):
             r.turn_off()
             lp = l.get_position()
             rp = r.get_position()
+            if lp==rp:
+                break
             if lp > rp:
                 ls-=1
             elif rp > lp:
                 rs-=1
-            if lp==rp:
-                break
         self.ltrue=ls
         self.rtrue=rs
 
 
     def go_true(self,inches):
         # drives the robot straight, rather than drifting off to one side.
+        print(inches)
         degrees = float(inches) / ((1.3 * math.pi) / 360)
         l = self.left_motor
         r = self.right_motor
@@ -172,11 +173,32 @@ class DriveSystem(object):
         else:
             l.turn_on(-self.ltrue)
             r.turn_on(-self.rtrue)
-        while math.fabs(l.get_position()) > math.fabs(degrees):
+        while math.fabs(l.get_position()) < math.fabs(degrees):
             pass
         l.turn_off()
         r.turn_off()
         print("Difference: ", l.get_position()-r.get_position())
+
+    def turn_degrees(self,degrees,speed):
+        print(degrees)
+        true = ((((6 * math.pi/360)*float(degrees)) / ((1.3 * math.pi) / 360)))
+        print(true)
+        l = self.left_motor
+        r = self.right_motor
+        l.reset_position()
+        r.reset_position()
+        if float(degrees) > 0:
+            l.turn_on(speed)
+            r.turn_on(-speed)
+            while math.fabs(l.get_position()) < math.fabs(true) * .9: #FixMe
+                pass
+        elif float(degrees) < 0:
+            l.turn_on(-speed)
+            r.turn_on(speed)
+            while math.fabs(l.get_position()) < math.fabs(true) * .9: #FixMe
+                pass
+        l.turn_off()
+        r.turn_off()
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
@@ -201,6 +223,16 @@ class DriveSystem(object):
         cs = ColorSensor(3)
         self.go(int(speed), int(speed))
         while cs.get_reflected_light_intensity() <= int(intensity):
+            pass
+        self.stop()
+
+    def go_straight_until_intensity_is_in_range(self, lower, upper, speed):
+        """
+        Goes straight at the give speed until the intensity returned by the color sensor is within the given range.
+        """
+        cs = ColorSensor(3)
+        self.go(int(speed), int(speed))
+        while cs.get_reflected_light_intensity() > int(upper) or cs.get_reflected_light_intensity() < (lower):
             pass
         self.stop()
 

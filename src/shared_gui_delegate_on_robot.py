@@ -116,7 +116,12 @@ class DelegateThatReceives(object):
         self.robot.drive_system.calibrate_true()
 
     def go_true(self, inches):
+        print("go true", inches)
         self.robot.drive_system.go_true(inches)
+
+    def turn(self,degrees):
+        print("turn", degrees)
+        self.robot.drive_system.turn_degrees(degrees)
 
     # m3 Beep_Proximity
     def m3_beep_proximity(self, initial, delta, speed):
@@ -172,4 +177,20 @@ class DelegateThatReceives(object):
     # def m2_beep_retrieve(self, dir, speed):
     # m2.beep_retrieve(self.robot, dir, int(speed))
 
-    # m4 sprint 3
+    # m4 sprint 3: Chess
+    def retrieve_piece(self, commands):
+        m4.chess_commands(commands)
+        m4.pick_up()
+    def place_piece(self, commands):
+        m4.chess_commands(commands)
+        m4.put_down()
+    def dispose_piece(self, commands):
+        m4.chess_commands(commands)
+        m4.dispose()
+
+    def lost(self):
+        m4.robot_lost()
+    def locate(self):
+        m4.locate_robot()
+    def read_intensity(self):
+        print(self.robot.sensor_system.color_sensor.get_reflected_light_intensity())
