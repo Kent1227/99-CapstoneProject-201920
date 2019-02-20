@@ -49,7 +49,7 @@ def raise_the_roof(robot):
     :return:
     """
     robot.drive_system.go_forward_until_distance_is_less_than(10, 100)
+    robot.drive_system.stop()
     robot.arm_and_claw.calibrate_arm()
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.lower_arm()
-    robot.drive_system.stop()
