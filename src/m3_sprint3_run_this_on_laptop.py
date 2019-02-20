@@ -10,6 +10,7 @@
 import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
+from tkinter import *
 import shared_gui
 import time
 
@@ -35,7 +36,7 @@ def main():
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
-    main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief='groove')
+    main_frame = tkinter.Frame(root, borderwidth=50, relief='groove')
     main_frame.grid()
 
     # -------------------------------------------------------------------------
@@ -53,12 +54,17 @@ def main():
         frame = ttk.Frame(window, padding=10, borderwidth=10, relief="ridge")
         frame.grid()
 
+        colors = {'blue', 'red', 'green', 'yellow', 'purple', 'light blue'}
+        tkvar = StringVar(root)
+
         frame_label = ttk.Label(frame, text="Baby Robot")
         begin_button = ttk.Button(frame, text="Wake Up Baby")
         speed_label = ttk.Label(frame, text="Speed:")
         speed_slider = ttk.Scale(frame, from_=10, to=100)
         hunger_meter = ttk.Progressbar(frame)
         hunger_label = ttk.Label(frame, text="Baby's Hunger")
+        color_change = ttk.OptionMenu(frame, tkvar, *colors)
+        color_button = ttk.Button(frame, text="Change Color")
 
         frame_label.grid(row=0, column=1)
         begin_button.grid(row=3, column=1)
@@ -66,7 +72,12 @@ def main():
         speed_slider.grid(row=2, column=1)
         hunger_label.grid(row=1, column=0)
         hunger_meter.grid(row=1, column=1)
+        color_change.grid(row=4, column=2)
+        color_button.grid(row=4, column=1)
 
+        main_frame.configure(background=tkvar.get())
+
+        color_button["command"] = lambda: handle_change_color(main_frame, tkvar, color_change)
         begin_button["command"] = lambda: handle_baby_robot(
             mqtt_sender, speed_slider, hunger_meter, root)
         return frame
@@ -113,14 +124,23 @@ def handle_baby_robot(mqtt_sender, scale, hunger_meter, root):
     mqtt_sender.send_message("m3_baby_robot", [scale.get()])
 
     hunger_meter['maximum'] = 100
-    progress_state = 100
-    get_progress(progress_state, hunger_meter, root)
+    progress_state = int(100)
+    get_progress(mqtt_sender, progress_state, hunger_meter, root)
 
 
-def get_progress(progress_state, hunger_meter, root):
-    hunger_meter["value"] = progress_state
+def get_progress(mqtt_sender, progress_state, hunger_meter, root):
+    hunger_meter["value"] = int(progress_state)
     hunger_meter.update()
-    root.after(1000, lambda: get_progress(hunger_meter, (progress_state - 1), root))
+    if hunger_meter["value"] > 0:
+        root.after(1000, lambda: get_progress(mqtt_sender, (progress_state - 1), hunger_meter, root))
+    else:
+        mqtt_sender.send_message("sleep_time")
+        exit()
+
+
+def handle_change_color(main_frame, tkvar, color_change):
+    main_frame.configure(background=tkvar.get())
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

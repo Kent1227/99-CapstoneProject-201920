@@ -124,6 +124,8 @@ class DelegateThatReceives(object):
     def m3_baby_robot(self, speed, progress_state):
         m3.m3_baby_walk(int(speed), int(progress_state))
 
+    def sleep_time(self):
+        m3.sleep_time()
 
     # m4
     def m4_led_proximity(self, initial, delta, speed):

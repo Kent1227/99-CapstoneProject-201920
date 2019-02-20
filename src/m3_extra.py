@@ -92,5 +92,6 @@ def m3_baby_proximity(initial,delta,speed):
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
 
-
+def sleep_time():
+    quit()
 
