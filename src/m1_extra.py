@@ -19,7 +19,7 @@ def shake(robot):
     :param robot:
     :return:
     """
-    robot.drive_system.go_forward_until_distance_is_less_than(10, 100)
+    robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.turn_degrees(40, 100)
     robot.drive_system.turn_degrees(-40, 100)
     robot.drive_system.turn_degrees(40, 100)
@@ -37,7 +37,7 @@ def spin(robot):
     :param robot:
     :return:
     """
-    robot.drive_system.go_forward_until_distance_is_less_than(10, 100)
+    robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.turn_degrees(720, 100)
     robot.drive_system.stop()
 
@@ -48,7 +48,7 @@ def raise_the_roof(robot):
     :param robot:
     :return:
     """
-    robot.drive_system.go_forward_until_distance_is_less_than(10, 100)
+    robot.drive_system.go_forward_until_distance_is_less_than(10, 50)
     robot.drive_system.stop()
     robot.arm_and_claw.calibrate_arm()
     robot.arm_and_claw.raise_arm()
