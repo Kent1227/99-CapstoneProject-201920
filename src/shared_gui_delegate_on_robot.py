@@ -11,10 +11,11 @@ import m4_extra as m4
 import m3_extra as m3
 import m2_Extra as m2
 import m1_extra as m1
+import time
 
 
 class DelegateThatReceives(object):
-    def __init__(self, robot, mqtt_reciever = None):
+    def __init__(self, robot, mqtt_reciever=None):
         """:type robot: rosebot.RoseBot"""
         self.robot = robot
         self.mqtt_reciever = mqtt_reciever
@@ -102,11 +103,11 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_until_color_is_not(color, speed)
 
     # Camera
-    def camera_cw(self,area,speed):
-        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
+    def camera_cw(self, area, speed):
+        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed), int(area))
 
-    def camera_ccw(self,area,speed):
-        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed),int(area))
+    def camera_ccw(self, area, speed):
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed), int(area))
 
     def camera_data(self):
         self.robot.drive_system.display_camera_data()
@@ -119,7 +120,7 @@ class DelegateThatReceives(object):
         print("go true", inches)
         self.robot.drive_system.go_true(inches)
 
-    def turn(self,degrees):
+    def turn(self, degrees):
         print("turn", degrees)
         self.robot.drive_system.turn_degrees(degrees)
 
@@ -130,7 +131,7 @@ class DelegateThatReceives(object):
     def m3_beep_retrieve(self, dir, speed):
         m3.m3_beep_retrieve(dir, int(speed))
 
-    #m3 Sprint 3
+    # m3 Sprint 3
     def m3_baby_robot(self, speed, progress_state):
         m3.m3_baby_walk(int(speed), int(progress_state), self.robot, self.mqtt_reciever)
 
@@ -182,18 +183,19 @@ class DelegateThatReceives(object):
 
     # m4 sprint 3: Chess
     def retrieve_piece(self, commands):
-        m4.chess_commands(commands)
-        m4.pick_up()
-    def place_piece(self, commands):
-        m4.chess_commands(commands)
-        m4.put_down()
-    def dispose_piece(self, commands):
-        m4.chess_commands(commands)
-        m4.dispose()
+        print("retrieve", commands)
+        m4.chess_commands(commands, self.robot)
+        m4.pick_up(self.robot)
 
-    def lost(self):
-        m4.robot_lost()
+    def place_piece(self, commands):
+        print("place", commands)
+        m4.chess_commands(commands, self.robot)
+        m4.put_down(self.robot)
+
+    def dispose_piece(self, commands):
+        print("dispose", commands)
+        m4.chess_commands(commands, self.robot)
+        m4.dispose(self.robot)
+
     def locate(self):
         m4.locate_robot()
-    def read_intensity(self):
-        print(self.robot.sensor_system.color_sensor.get_reflected_light_intensity())

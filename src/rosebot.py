@@ -47,6 +47,7 @@ class DriveSystem(object):
     Controls the robot's motion via GO and STOP methods,
         along with various methods that GO/STOP under control of a sensor.
     """
+
     # -------------------------------------------------------------------------
     # NOTE:
     #   Throughout, when going straight:
@@ -115,8 +116,8 @@ class DriveSystem(object):
         at the given speed for the given number of inches,
         using the encoder (degrees traveled sensor) built into the motors.
         """
-        inches_per_degree = (1.3*math.pi)/360
-        degrees = float(inches)/inches_per_degree
+        inches_per_degree = (1.3 * math.pi) / 360
+        degrees = float(inches) / inches_per_degree
         self.left_motor.reset_position()
         self.go(speed, speed)
         while math.fabs(self.left_motor.get_position()) < degrees:
@@ -137,8 +138,8 @@ class DriveSystem(object):
         # calibrates the speeds of the motors for drive_true.
         l = self.left_motor
         r = self.right_motor
-        ls=100
-        rs=100
+        ls = 100
+        rs = 100
         while True:
             l.reset_position()
             r.reset_position()
@@ -149,17 +150,16 @@ class DriveSystem(object):
             r.turn_off()
             lp = l.get_position()
             rp = r.get_position()
-            if lp==rp:
+            if lp == rp:
                 break
             if lp > rp:
-                ls-=1
+                ls -= 1
             elif rp > lp:
-                rs-=1
-        self.ltrue=ls
-        self.rtrue=rs
+                rs -= 1
+        self.ltrue = ls
+        self.rtrue = rs
 
-
-    def go_true(self,inches):
+    def go_true(self, inches):
         # drives the robot straight, rather than drifting off to one side.
         print(inches)
         degrees = float(inches) / ((1.3 * math.pi) / 360)
@@ -167,7 +167,7 @@ class DriveSystem(object):
         r = self.right_motor
         l.reset_position()
         r.reset_position()
-        if inches>0:
+        if inches > 0:
             l.turn_on(self.ltrue)
             r.turn_on(self.rtrue)
         else:
@@ -177,11 +177,11 @@ class DriveSystem(object):
             pass
         l.turn_off()
         r.turn_off()
-        print("Difference: ", l.get_position()-r.get_position())
+        print("Difference: ", l.get_position() - r.get_position())
 
-    def turn_degrees(self,degrees,speed):
+    def turn_degrees(self, degrees, speed):
         print(degrees)
-        true = ((((6 * math.pi/360)*float(degrees)) / ((1.3 * math.pi) / 360)))
+        true = ((((6 * math.pi / 360) * float(degrees)) / ((1.3 * math.pi) / 360)))
         print(true)
         l = self.left_motor
         r = self.right_motor
@@ -190,12 +190,12 @@ class DriveSystem(object):
         if float(degrees) > 0:
             l.turn_on(speed)
             r.turn_on(-speed)
-            while math.fabs(l.get_position()) < math.fabs(true) * .9: #FixMe
+            while math.fabs(l.get_position()) < math.fabs(true) * .9:  # FixMe
                 pass
         elif float(degrees) < 0:
             l.turn_on(-speed)
             r.turn_on(speed)
-            while math.fabs(l.get_position()) < math.fabs(true) * .9: #FixMe
+            while math.fabs(l.get_position()) < math.fabs(true) * .9:  # FixMe
                 pass
         l.turn_off()
         r.turn_off()
@@ -311,10 +311,10 @@ class DriveSystem(object):
         """
         ps = InfraredProximitySensor(4)
         while True:
-            if ps.get_distance_in_inches() > int(inches)+int(delta):
-                self.go_forward_until_distance_is_less_than(int(inches)+int(delta),int(speed))
-            elif ps.get_distance_in_inches() < int(inches)+int(delta):
-                self.go_backward_until_distance_is_greater_than(int(inches)-int(delta),int(speed))
+            if ps.get_distance_in_inches() > int(inches) + int(delta):
+                self.go_forward_until_distance_is_less_than(int(inches) + int(delta), int(speed))
+            elif ps.get_distance_in_inches() < int(inches) + int(delta):
+                self.go_backward_until_distance_is_greater_than(int(inches) - int(delta), int(speed))
             else:
                 break
 
@@ -364,9 +364,9 @@ class DriveSystem(object):
         Requires that the user train the camera on the color of the object.
         """
         c = self.sensor_system.camera
-        self.go(-int(speed), int(speed))
+        self.go(int(speed), -int(speed))
         while c.get_biggest_blob().get_area() < area:
-            pass
+            print(c.get_biggest_blob())
         self.stop()
 
     def spin_counterclockwise_until_sees_object(self, speed, area):
@@ -376,7 +376,7 @@ class DriveSystem(object):
         Requires that the user train the camera on the color of the object.
         """
         c = self.sensor_system.camera
-        self.go(speed, -speed)
+        self.go(-int(speed), int(speed))
         while c.get_biggest_blob().get_area() < area:
             pass
         self.stop()
@@ -394,6 +394,7 @@ class DriveSystem(object):
 ###############################################################################
 class ArmAndClaw(object):
     """ Controls the robot's arm and claw (which operate together). """
+
     # -------------------------------------------------------------------------
     # NOTE:
     #   A POSITIVE speed for the ArmAndClaw's motor moves the arm UP.
