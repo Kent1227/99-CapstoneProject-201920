@@ -378,6 +378,11 @@ def get_m1_dance_frame(window, mqtt_sender):
     shake_button.grid(row=3, column=0)
     spin_button.grid(row=3, column=2)
 
+    disco_button["command"] = lambda: handle_disco(mqtt_sender)
+    raise_the_roof_button["command"] = lambda: handle_raise(mqtt_sender)
+    shake_button["command"] = lambda: handle_shake(mqtt_sender)
+    spin_button["command"] = lambda: handle_spin(mqtt_sender)
+
     return frame
 
 ###############################################################################
