@@ -1,5 +1,4 @@
 import rosebot
-import time
 
 
 def disco(robot):
